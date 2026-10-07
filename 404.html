@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Pharosline</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Familjen+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#141414; --night:#121110; --amber:#DD9933; --paper:#F2ECDF; --dust:#8C877C; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px; background: radial-gradient(120% 80% at 50% 110%, #1d1a15 0%, var(--night) 60%); color: var(--paper); font: 400 17px/1.55 "Familjen Grotesk", system-ui, sans-serif; overflow-x: hidden; }
+  main { width: min(640px, 100%); position: relative; }
+  .beam { position: fixed; left: 50%; top: -20%; width: 160vw; height: 120vh; transform: translateX(-50%); pointer-events: none; background: conic-gradient(from 160deg at 50% 0%, transparent 0deg, rgba(221,153,51,.22) 14deg, rgba(221,153,51,.06) 30deg, transparent 44deg); animation: sweep 9s cubic-bezier(.76,0,.24,1) infinite alternate; transform-origin: 50% 0; }
+  @keyframes sweep { from { transform: translateX(-50%) rotate(-18deg); } to { transform: translateX(-50%) rotate(18deg); } }
+  .mark { width: 64px; height: 64px; }
+  .code { margin: 24px 0 0; font: 900 clamp(110px, 32vw, 220px)/.8 "Big Shoulders Display", Impact, sans-serif; color: var(--amber); }
+  h1 { margin: 12px 0 10px; font: 900 clamp(36px, 9vw, 64px)/.95 "Big Shoulders Display", Impact, sans-serif; text-transform: uppercase; }
+  p { margin: 0 0 28px; color: rgba(242,236,223,.75); max-width: 40ch; }
+  .ar { font: 800 22px/1.4 "Segoe UI", Tahoma, sans-serif; color: var(--paper); margin-bottom: 28px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; background: var(--amber); color: var(--ink); text-decoration: none; font: 700 15px/1 "Big Shoulders Display", Impact, sans-serif; letter-spacing: .14em; }
+  .btn:hover { background: var(--paper); }
+  .btn:focus-visible { outline: 2px solid var(--paper); outline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) { .beam { animation: none; } }
+</style>
+</head>
+<body>
+<div class="beam" aria-hidden="true"></div>
+<main>
+  <svg class="mark" viewBox="0 0 1932 1932" aria-label="Pharosline">
+    <path fill="#F2ECDF" fill-rule="evenodd" d="M350 378H1080A391 391 0 0 1 1080 1160H587V1245H1133V1553H350Z M587 587V840H1010A126.5 126.5 0 0 0 1010 587Z"/>
+    <rect x="1133" y="1245" width="449" height="308" fill="#DD9933"/>
+  </svg>
+  <p class="code" aria-hidden="true">404</p>
+  <h1>This page went dark</h1>
+  <p>The link may be old or mistyped. Head back and let the lighthouse guide you.</p>
+  <p class="ar" lang="ar" dir="rtl">خلّي فكرتك تنوّر</p>
+  <a class="btn" href="/">BACK TO PHAROSLINE</a>
+</main>
+</body>
+</html>

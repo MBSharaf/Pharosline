@@ -1,0 +1,16 @@
+// @ts-check
+// Customer reviews wiring. Public URLs/IDs only — no secrets.
+// Owner: pharosline.agency@gmail.com. Built by tools/reviews.gs.
+//  - Reviews land in the "Reviews" tab of the client-requests sheet.
+//  - Tick "Approved" on a row and it appears on the website within about a minute.
+
+export const REVIEWS = {
+  // Apps Script web app: returns ONLY approved reviews, ONLY public fields (never phone numbers)
+  feedUrl: 'https://script.google.com/macros/s/AKfycbw56nGy46xxD-b2GeeiHc6LLMnSpLdAgrN93bswd8LU752JDwHLwiwm5h-YxubF8rTE7A/exec',
+  // Google Form the website posts new reviews to
+  responseUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSefKEd5pvtXDjTx0SfmhNC2KDSx2Iihg75X7n2qO3PHRmofSA/formResponse',
+  editUrl: 'https://docs.google.com/forms/d/1xm9XlpsyExVvBPJDKxCgB6d1g2QFZuHN1ospfKYz0PQ/edit',
+  entries: { name: '371260723', brand: '524979771', service: '857220514', rating: '294615794', text: '884869031', phone: '1639180307' },
+  services: ['Social Media', 'YouTube', 'Websites', 'PDF & Presentations', 'Ads', 'Motion Graphic Videos', 'Brand Identity', 'Other'],
+  maxLength: 600,
+};

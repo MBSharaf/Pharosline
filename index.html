@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharosline — Digital Creative Agency</title>
+<meta name="description" content="Pharosline is a digital creative agency for motion graphic videos, reels, advertising campaigns, brand identity and documents. خلّي فكرتك تنوّر.">
+<meta name="theme-color" content="#141414">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon-32.png">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pharosline">
+<meta property="og:title" content="Pharosline — Digital Creative Agency">
+<meta property="og:description" content="Motion graphics, reels, ad campaigns, brand identity, websites and documents. خلّي فكرتك تنوّر.">
+<meta property="og:image" content="assets/showreel/poster.jpg">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Familjen+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&text=PHAROSLINE&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@800;900&text=%D8%AE%D9%84%D9%91%D9%8A%20%D9%81%D9%83%D8%B1%D8%AA%D9%83%20%D8%AA%D9%86%D9%88%D9%91%D8%B1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="is-loading">
+
+<!-- ============ LOADER ============ -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <svg viewBox="0 0 1932 1932"><use href="#pmark"/></svg>
+  </div>
+  <div class="loader__count"><span data-count>0</span></div>
+  <div class="loader__bar"><i></i></div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="pmark">
+      <path fill="currentColor" d="M350 378H1080A391 391 0 0 1 1080 1160H587V1245H1133V1553H350Z M587 587V840H1010A126.5 126.5 0 0 0 1010 587Z" fill-rule="evenodd"/>
+      <rect x="1133" y="1245" width="449" height="308" fill="#DD9933" style="fill: var(--lamp, #DD9933)"/>
+    </g>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter>
+  </defs>
+</svg>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"><span class="cursor__label"></span></div></div>
+
+<!-- ============ WHATSAPP ============ -->
+<a class="wa" href="https://wa.me/201017300040?text=Hi%20Pharosline%2C%20I'd%20like%20to%20start%20a%20project." target="_blank" rel="noopener" aria-label="Chat with Pharosline on WhatsApp" data-magnetic>
+  <span class="wa__beam" aria-hidden="true"></span>
+  <span class="wa__label">Chat on WhatsApp</span>
+  <span class="wa__lamp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5A12.4 12.4 0 0 0 5.3 22.2L3.6 28.4l6.4-1.7A12.4 12.4 0 1 0 16 3.5Zm0 22.6c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-3.8 1 1-3.7-.2-.4A10.2 10.2 0 1 1 16 26.1Zm5.6-7.6c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.4 8.4 0 0 1-4.2-3.6c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4l-.2-.3Z"/></svg>
+  </span>
+</a>
+
+<!-- ============ BACK TO TOP (same lamp style as WhatsApp) ============ -->
+<a class="wa wa--top" href="#top" aria-label="Back to top" data-magnetic>
+  <span class="wa__label">Back to top</span>
+  <span class="wa__lamp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 6.5 26 16.5l-2.2 2.2-6.2-6.2V26h-3.2V12.5l-6.2 6.2L6 16.5Z"/></svg>
+  </span>
+</a>
+<!-- logo lamp drawn outside the blended nav so it stays brand amber on every background -->
+<span class="nav__lampfix" aria-hidden="true"></span>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a href="#top" class="nav__brand" aria-label="Pharosline home">
+    <svg viewBox="0 0 1932 1932" class="nav__mark"><use href="#pmark"/></svg>
+    <span class="nav__word">PHAROSLINE</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#work" class="roll" data-magnetic><span data-text="WORK">WORK</span></a>
+    <a href="#services" class="roll" data-magnetic><span data-text="SERVICES">SERVICES</span></a>
+    <a href="#about" class="roll" data-magnetic><span data-text="ABOUT">ABOUT</span></a>
+    <a href="#pricing" class="roll" data-magnetic><span data-text="PRICING">PRICING</span></a>
+    <a href="#contact" class="roll nav__cta" data-magnetic><span data-text="CONTACT">CONTACT</span></a>
+  </nav>
+  <button class="nav__burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+</header>
+<div class="menu" aria-hidden="true">
+  <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
+  <p class="menu__ar" lang="ar" dir="rtl">خلّي فكرتك تنوّر</p>
+  <ul class="social social--menu" aria-label="Pharosline on social media">
+      <li><a href="https://www.instagram.com/pharosline?stkn=MXVldXdtN2thb3o3OQ==" target="_blank" rel="noopener" aria-label="Instagram — @pharosline">
+        <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="f"/></svg></span>
+        <span class="social__name">Instagram</span><span class="social__handle">@pharosline</span></a></li>
+      <li><a href="https://www.facebook.com/share/1DWTSjocNN/" target="_blank" rel="noopener" aria-label="Facebook — Pharosline">
+        <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H9v3h2.5V21" class="f"/></svg></span>
+        <span class="social__name">Facebook</span><span class="social__handle">Pharosline</span></a></li>
+      <li><a href="https://www.tiktok.com/@pharosline?_r=1&amp;_t=ZS-9ALi3fgLxhO" target="_blank" rel="noopener" aria-label="TikTok — @pharosline">
+        <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 3c.3 2.3 1.8 3.8 4 4v3c-1.5 0-2.8-.4-4-1.2v6.3a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.2 2.8V3h3.1Z" class="f"/></svg></span>
+        <span class="social__name">TikTok</span><span class="social__handle">@pharosline</span></a></li>
+    </ul>
+</div>
+
+<!-- ============ EDIT TIMELINE (scroll HUD) ============ -->
+<div class="timeline" aria-hidden="true">
+  <span class="timeline__tc" data-tc>00:00:00</span>
+  <div class="timeline__track">
+    <div class="timeline__ticks"></div>
+    <div class="timeline__clips"></div>
+    <div class="timeline__head"><i></i></div>
+  </div>
+  <span class="timeline__scene" data-scene>Opening</span>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-chapter="Opening">
+  <canvas class="hero__gl" aria-hidden="true"></canvas>
+  <div class="hero__type" aria-hidden="true">
+    <div class="hero__line hero__line--a"><span>PHAROS</span></div>
+    <div class="hero__line hero__line--b"><span>LINE</span></div>
+  </div>
+  <div class="hero__type hero__type--lit" aria-hidden="true">
+    <div class="hero__line hero__line--a"><span>PHAROS</span></div>
+    <div class="hero__line hero__line--b"><span>LINE</span></div>
+  </div>
+  <div class="hero__ui">
+    <h1 class="sr-only">Pharosline — Digital Creative Agency</h1>
+    <p class="hero__kicker"><span class="split">Digital Creative Agency</span></p>
+    <p class="hero__ar" lang="ar" dir="rtl">خلّي فكرتك تنوّر</p>
+    <p class="hero__lede">Motion graphics, reels, campaigns, identities and documents — made to cut through the noise and light up an idea.</p>
+    <div class="hero__ctas">
+      <a href="#contact" class="btn btn--amber" data-magnetic data-cursor="Let's talk"><span>START A PROJECT</span></a>
+      <a href="#work" class="btn btn--ghost" data-magnetic data-cursor="Scroll"><span>VIEW OUR WORK</span></a>
+    </div>
+  </div>
+  <div class="hero__meta">
+    <span>Beam sweep</span><span class="hero__deg" data-deg>000°</span>
+  </div>
+  <div class="hero__scroll" aria-hidden="true"><i></i>Scroll</div>
+</section>
+
+<!-- ============ MANIFESTO ============ -->
+<section class="manifesto" data-chapter="Manifesto">
+  <p class="manifesto__text" data-light-words>
+    Every feed is noise. A lighthouse doesn't shout — it gives one clear signal that everyone can follow. Pharosline turns your idea into that signal: a film, a reel, a campaign, an identity, a document people actually read.
+  </p>
+  <p class="manifesto__ar" lang="ar" dir="rtl">خلّي فكرتك تنوّر</p>
+</section>
+
+<!-- ============ SHOWREEL ============ -->
+<section class="reel" id="showreel" data-chapter="Showreel">
+  <div class="reel__pin">
+    <div class="reel__heading">
+      <h2 class="display">Show<br>reel</h2>
+      <p>The Pharosline brand intro, all eight scenes cut back to back.</p>
+    </div>
+    <div class="reel__stage">
+      <div class="reel__frame">
+        <video class="reel__video" controls muted loop playsinline preload="none" data-poster="assets/showreel/poster.jpg">
+          <source src="assets/showreel/pharosline_showreel_1080p.mp4" type="video/mp4" media="(min-width: 900px)">
+          <source src="assets/showreel/pharosline_showreel_720p.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="reel__grain"></div>
+        <span class="tape tape--tl"></span><span class="tape tape--br"></span>
+        <button class="reel__play" aria-label="Play showreel with sound"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button>
+      </div>
+      <div class="reel__scrubber">
+        <span class="reel__tc" data-reel-tc>00:00</span>
+        <div class="reel__scenes" data-reel-bar></div>
+        <span class="reel__name">Showreel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services paper" id="services" data-chapter="Services">
+  <header class="sec-head">
+    <h2 class="display">What we make</h2>
+    <p>Six crafts, one studio. Pick one to see how it's made.</p>
+  </header>
+  <div class="services__grid">
+    <ol class="services__list" role="tablist" aria-label="Services">
+      <li><button role="tab" aria-selected="true" data-svc="0"><em>01</em><strong>Motion Graphic Videos</strong><span>Explainers, brand films, animated stories</span></button></li>
+      <li><button role="tab" aria-selected="false" data-svc="1"><em>02</em><strong>Reels</strong><span>Vertical, fast, made for the scroll</span></button></li>
+      <li><button role="tab" aria-selected="false" data-svc="2"><em>03</em><strong>Advertising Campaigns</strong><span>One idea carried across every placement</span></button></li>
+      <li><button role="tab" aria-selected="false" data-svc="3"><em>04</em><strong>Brand Identity</strong><span>Marks, systems and the rules behind them</span></button></li>
+      <li><button role="tab" aria-selected="false" data-svc="4"><em>05</em><strong>Documents &amp; PDFs</strong><span>Profiles, decks and reports worth opening</span></button></li>
+      <li><button role="tab" aria-selected="false" data-svc="5"><em>06</em><strong>Websites</strong><span>Landing pages, brand sites and stores that move</span></button></li>
+    </ol>
+    <div class="services__stage" aria-live="polite">
+      <!-- 01 Motion: editor window -->
+      <div class="svc svc--motion is-active" data-panel="0">
+        <div class="editor">
+          <div class="editor__bar"><i></i><i></i><i></i><span>brand-intro_v8.prproj</span></div>
+          <div class="editor__view"><video src="assets/video/october-war-card.mp4" data-poster="assets/video/october-war-poster.jpg" muted loop playsinline preload="none" data-motion-video></video></div>
+          <div class="editor__tracks">
+            <div class="editor__track"><b style="--w:18%"></b><b style="--w:12%"></b><b style="--w:12%"></b><b style="--w:12%"></b><b style="--w:16%"></b><b style="--w:16%"></b></div>
+            <div class="editor__track editor__track--amber"><b style="--w:30%"></b><b style="--w:22%"></b><b style="--w:34%"></b></div>
+            <div class="editor__track editor__track--wave"></div>
+            <i class="editor__head"></i>
+          </div>
+        </div>
+      </div>
+      <!-- 02 Reels: phone -->
+      <div class="svc svc--reels" data-panel="1">
+        <div class="phone">
+          <div class="phone__screen"><video src="assets/video/Pharosline_3_collage.mp4" muted loop playsinline preload="none"></video>
+            <div class="phone__ui"><span class="phone__like">♥</span><span>pharosline</span></div>
+          </div>
+        </div>
+        <div class="phone phone--back"><div class="phone__screen"><video src="assets/video/Pharosline_4_saas.mp4" muted loop playsinline preload="none"></video></div></div>
+        <p class="svc__note">9:16 crop from our brand film</p>
+      </div>
+      <!-- 03 Ads: placements -->
+      <div class="svc svc--ads" data-panel="2">
+        <div class="placements">
+          <figure class="pl pl--wide"><img loading="lazy" decoding="async" src="assets/img/ads-collage-1.jpg" alt="Real Meta ad campaign results"></figure>
+          <figure class="pl pl--sq"><img loading="lazy" decoding="async" src="assets/img/ads-collage-2.jpg" alt="Real Meta ad campaign results"></figure>
+          <figure class="pl pl--tall"><img loading="lazy" decoding="async" src="assets/img/ads-collage-3.jpg" alt="Real Meta ad campaign results"></figure>
+          <span class="tape tape--a"></span><span class="tape tape--b"></span>
+        </div>
+        <div class="adstats" data-adstats>
+          <dl class="adstats__grid"></dl>
+          <p class="adstats__note"></p>
+        </div>
+        <p class="svc__note">One frame, three placements</p>
+      </div>
+      <!-- 04 Identity: exploded mark -->
+      <div class="svc svc--brand" data-panel="3">
+        <div class="explode">
+          <div class="explode__layer explode__paper"></div>
+          <svg class="explode__layer explode__p" viewBox="0 0 1932 1932"><path fill="#141414" fill-rule="evenodd" d="M350 378H1080A391 391 0 0 1 1080 1160H587V1245H1133V1553H350Z M587 587V840H1010A126.5 126.5 0 0 0 1010 587Z"/></svg>
+          <svg class="explode__layer explode__sq" viewBox="0 0 1932 1932"><rect x="1133" y="1245" width="449" height="308" fill="#DD9933"/></svg>
+          <div class="explode__layer explode__word">PHAROSLINE</div>
+          <div class="explode__layer explode__grid"></div>
+        </div>
+        <ul class="swatches"><li style="--c:#141414">Ink<br>#141414</li><li style="--c:#DD9933">Amber<br>#DD9933</li><li style="--c:#F2ECDF">Paper<br>#F2ECDF</li></ul>
+      </div>
+      <!-- 05 Documents: fanned pages -->
+      <div class="svc svc--docs" data-panel="4">
+        <div class="pages">
+          <div class="page" style="--i:0"><img loading="lazy" decoding="async" src="assets/img/docs-1-october-1973.jpg" alt="October 1973 Zamalek cup document page" style="object-position: center"><b>Cover</b></div>
+          <div class="page" style="--i:1"><img loading="lazy" decoding="async" src="assets/img/docs-2-idt-scanner.jpg" alt="Dental lab scanner product page" style="object-position: center 35%"><b>Services</b></div>
+          <div class="page" style="--i:2"><img loading="lazy" decoding="async" src="assets/img/docs-3-airplane-mode.jpg" alt="Airplane mode presentation page" style="object-position: 25% center"><b>Formats</b></div>
+          <div class="page" style="--i:3"><img loading="lazy" decoding="async" src="assets/img/docs-4-hlr-view.jpg" alt="HLR view presentation page" style="object-position: 12% center"><b>Approach</b></div>
+        </div>
+        <p class="svc__note">Layout study built from Pharosline's own frames</p>
+      </div>
+      <!-- 06 Websites: browser window -->
+      <div class="svc svc--web" data-panel="5">
+        <div class="browser">
+          <div class="browser__bar"><i></i><i></i><i></i><span class="browser__url">fitme — brand website</span></div>
+          <div class="browser__view"><video src="assets/video/fitme-website.mp4" muted loop playsinline preload="none" aria-label="Fitme brand website, scrolling walkthrough"></video></div>
+        </div>
+        <div class="browser__phone" aria-hidden="true"><video src="assets/video/fitme-website.mp4" muted loop playsinline preload="none"></video></div>
+        <span class="tape tape--a"></span>
+        <p class="svc__note">Fitme brand website, live walkthrough</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELECTED WORK ============ -->
+<section class="work paper" id="work" data-chapter="Selected work">
+  <header class="sec-head sec-head--row">
+    <h2 class="display">Selected work</h2>
+    <div class="filters" role="toolbar" aria-label="Filter projects">
+      <button class="is-on" data-filter="all">ALL</button>
+      <button data-filter="motion">MOTION</button>
+      <button data-filter="reels">REELS</button>
+      <button data-filter="ads">ADS</button>
+      <button data-filter="branding">BRANDING</button>
+      <button data-filter="documents">DOCUMENTS</button>
+      <button data-filter="websites">WEBSITES</button>
+    </div>
+  </header>
+  <div class="work__grid" data-work-grid></div>
+  <div class="work__empty" hidden>
+    <p class="work__empty-title">This shelf is waiting for its first project.</p>
+    <p>We publish only finished, real work here. Bring us the brief and it could be yours.</p>
+    <a href="#contact" class="btn btn--ink" data-magnetic><span>START A PROJECT</span></a>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process" id="process" data-chapter="Process">
+  <div class="process__pin">
+    <header class="process__head">
+      <h2 class="display">How an idea<br>gets lit</h2>
+      <p class="process__tc"><span data-proc-tc>00:00</span> / 05:00</p>
+    </header>
+    <div class="process__rail">
+      <div class="process__clips">
+        <article class="clip"><figure><img loading="lazy" decoding="async" src="assets/img/f0-phone.jpg" alt="Halftone hand holding a blank phone"></figure><div><em>01</em><h3>Discover</h3><p>We dig into the business, the audience and the feed they live in. What's already being said, and what isn't.</p></div></article>
+        <article class="clip"><figure><img loading="lazy" decoding="async" src="assets/img/f3-idea.jpg" alt="Halftone head with an amber lightbulb"></figure><div><em>02</em><h3>Strategy</h3><p>One message, one audience, one place to win. The idea gets sharpened before anything gets drawn.</p></div></article>
+        <article class="clip"><figure><img loading="lazy" decoding="async" src="assets/img/f2-stroke.jpg" alt="Amber brush stroke on paper"></figure><div><em>03</em><h3>Art Direction</h3><p>Look, type, colour and rhythm. Boards and style frames you approve before production starts.</p></div></article>
+        <article class="clip"><figure><img loading="lazy" decoding="async" src="assets/img/f5-stack.jpg" alt="Stack of collage cards over an edit timeline"></figure><div><em>04</em><h3>Production</h3><p>Animation, edit, design and layout — built frame by frame on the timeline.</p></div></article>
+        <article class="clip"><figure><img loading="lazy" decoding="async" src="assets/img/f6-launch.jpg" alt="Paper plane flying to an audience"></figure><div><em>05</em><h3>Delivery</h3><p>Every format and size, exported clean and ready to publish, print or present.</p></div></article>
+      </div>
+      <div class="process__line"><i data-proc-bar></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAYGROUND ============ -->
+<section class="lab" id="lab" data-chapter="Playground">
+  <header class="sec-head">
+    <h2 class="display">Playground</h2>
+    <p>Small experiments with our own materials. Touch everything.</p>
+  </header>
+  <div class="lab__grid">
+    <article class="exp exp--beam" data-cursor="Move">
+      <div class="exp__canvas exp__beam">
+        <img loading="lazy" decoding="async" src="assets/img/keyvisual.jpg" alt="Pharosline key visual: P mark over an amber brush stroke with the tagline خلّي فكرتك تنوّر">
+        <div class="exp__dark"></div>
+      </div>
+      <footer><h3>Night watch</h3><p>Move to sweep the light across our key visual.</p></footer>
+    </article>
+    <article class="exp exp--dots" data-cursor="Move">
+      <canvas class="exp__canvas" data-halftone></canvas>
+      <footer><h3>Halftone</h3><p>Our tagline, printed in dots that answer your cursor.</p></footer>
+    </article>
+    <article class="exp exp--table">
+      <div class="exp__canvas table" data-table>
+        <div class="cut" style="--x:12%;--y:14%;--r:-8deg;--bg:url(../assets/img/f0-phone.jpg);--bp:50% 50%;--bs:420%;--w:26%;--h:52%" data-cursor="Drag"></div>
+        <div class="cut" style="--x:56%;--y:10%;--r:6deg;--bg:url(../assets/img/f3-idea.jpg);--bp:50% 45%;--bs:330%;--w:30%;--h:56%" data-cursor="Drag"></div>
+        <div class="cut" style="--x:30%;--y:52%;--r:-3deg;--bg:url(../assets/img/f4-services.jpg);--bp:30% 45%;--bs:390%;--w:24%;--h:40%" data-cursor="Drag"></div>
+        <div class="cut" style="--x:62%;--y:58%;--r:9deg;--bg:url(../assets/img/f6-launch.jpg);--bp:66% 46%;--bs:380%;--w:26%;--h:34%" data-cursor="Drag"></div>
+        <div class="cut cut--mark" style="--x:4%;--y:60%;--r:4deg;--w:20%;--h:34%" data-cursor="Drag"><svg viewBox="0 0 1932 1932"><use href="#pmark"/></svg></div>
+      </div>
+      <footer><h3>Cutting table</h3><p>Drag the cut-outs from our brand film. Make a new frame.</p></footer>
+    </article>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about paper" id="about" data-chapter="About">
+  <div class="about__grid">
+    <div class="about__copy">
+      <h2 class="display">A studio named after a lighthouse</h2>
+      <p class="about__big">Pharos was the lighthouse of Alexandria — built so ships could find their way through the dark. That's the job we take on for brands.</p>
+      <p>Pharosline is a digital creative agency. We make motion graphic videos, social reels, advertising campaigns, brand identities and documents, and we work in both Arabic and English.</p>
+      <p>Our own brand film sums up how we think: start with the noise, find the idea, give it a strong look, then send it straight to the people it's for.</p>
+    </div>
+    <figure class="about__visual" data-tilt>
+      <img loading="lazy" decoding="async" src="assets/img/keyvisual.jpg" alt="Pharosline key visual">
+      <span class="tape tape--tl"></span><span class="tape tape--br"></span>
+    </figure>
+  </div>
+  <div class="proof">
+    <div class="proof__item"><strong>8</strong><span>scenes in our brand film</span></div>
+    <div class="proof__item"><strong>5</strong><span>crafts under one roof</span></div>
+    <div class="proof__item"><strong>2</strong><span>languages, Arabic &amp; English</span></div>
+    <div class="proof__clients">
+      <h3>Clients &amp; testimonials</h3>
+      <p>We only publish names and words our clients have signed off on. The first ones are on their way — this space fills up as projects launch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="reviews" id="reviews" data-chapter="Reviews" aria-labelledby="reviews-title">
+  <header class="reviews__head">
+    <h2 class="display" id="reviews-title">What clients say</h2>
+    <p class="reviews__lede" data-reviews-lede>Real words from the brands we work with. Worked with us? Tell others how it went.</p>
+    <button class="btn btn--amber" type="button" data-review-open aria-expanded="false" aria-controls="review-form" data-magnetic><span>LEAVE A REVIEW</span></button>
+  </header>
+
+  <div class="reviews__grid" data-reviews-grid aria-live="polite"></div>
+
+  <form class="rform" id="review-form" novalidate data-review-form hidden>
+    <div class="inquiry__row">
+      <label class="field"><span>Your name</span><input name="name" autocomplete="name" required maxlength="80"></label>
+      <label class="field"><span>Brand or company (optional)</span><input name="brand" autocomplete="organization" maxlength="80"></label>
+    </div>
+    <fieldset class="inquiry__types">
+      <legend>Which service did we do for you?</legend>
+      <div class="rform__services" data-review-services></div>
+    </fieldset>
+    <fieldset class="rform__rating">
+      <legend>How would you rate working with us?</legend>
+      <div class="stars" role="radiogroup" aria-label="Rating">
+        <!-- written 5→1 and shown reversed, so hovering/choosing a star lights it and the ones before it -->
+        <label><input type="radio" name="rating" value="5"><span aria-hidden="true">★</span><b class="sr-only">5 stars</b></label>
+        <label><input type="radio" name="rating" value="4"><span aria-hidden="true">★</span><b class="sr-only">4 stars</b></label>
+        <label><input type="radio" name="rating" value="3"><span aria-hidden="true">★</span><b class="sr-only">3 stars</b></label>
+        <label><input type="radio" name="rating" value="2"><span aria-hidden="true">★</span><b class="sr-only">2 stars</b></label>
+        <label><input type="radio" name="rating" value="1"><span aria-hidden="true">★</span><b class="sr-only">1 star</b></label>
+      </div>
+    </fieldset>
+    <label class="field"><span>Your review <em class="rform__count" data-review-count>0 / 600</em></span><textarea name="text" rows="4" required maxlength="600"></textarea></label>
+    <label class="field"><span>WhatsApp number (optional, private — never shown)</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01012345678"></label>
+    <p class="inquiry__error" role="alert" hidden data-review-error></p>
+    <button class="btn btn--amber btn--big" type="submit" data-magnetic><span>SEND REVIEW</span></button>
+    <p class="inquiry__hint">Your review appears here after a quick check.</p>
+  </form>
+  <div class="rform__done" hidden data-review-done>
+    <p class="display">Thank you.</p>
+    <p>Your review will appear here after a quick check.</p>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing" data-chapter="Pricing">
+  <div class="pricing__top">
+    <header class="sec-head pricing__head">
+      <h2 class="display">Packages</h2>
+      <p>Pick how often, pick what you need. Prices update instantly.</p>
+    </header>
+    <div class="pricing__controls">
+      <div class="billing" role="radiogroup" aria-label="Billing period">
+        <i class="billing__thumb" aria-hidden="true"></i>
+        <button role="radio" aria-checked="false" data-billing="weekly">Weekly</button>
+        <button role="radio" aria-checked="true" data-billing="monthly">Monthly <span class="billing__badge">Best value</span></button>
+      </div>
+      <div class="ptabs" role="tablist" aria-label="Services">
+        <i class="ptabs__pill" aria-hidden="true"></i>
+      </div>
+      <p class="pricing__billnote" data-billnote hidden>Weekly / Monthly applies to Social Media plans. Other services are priced per project.</p>
+    </div>
+  </div>
+  <p class="pricing__offer"><span class="pricing__offer-tag" tabindex="0" aria-describedby="offer-tip">First-client offer</span> <span id="offer-tip" class="pricing__offer-tip">Special price for our first clients. Limited spots.</span></p>
+  <div class="pgrid" role="tabpanel" data-pgrid aria-live="polite"></div>
+  <p class="pricing__note" data-pnote hidden></p>
+  <p class="pricing__foot">Ad budget is paid directly to Meta and is not included in prices.</p>
+
+</section>
+
+<!-- ============ PRICING FAQ ============ -->
+<section class="faq" id="faq" data-faq aria-labelledby="faq-title">
+    <h3 class="faq__title" id="faq-title">Questions before you start</h3>
+    <div class="faq__list" data-faq-list></div>
+  </section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact" data-chapter="Contact">
+  <div class="contact__glow" aria-hidden="true"></div>
+  <h2 class="contact__title display"><span>Have a project</span><span>in mind?</span></h2>
+  <form class="inquiry" novalidate data-inquiry>
+    <fieldset class="inquiry__types">
+      <legend>What do you need?</legend>
+      <label><input type="radio" name="service" value="social"><span>Social Media</span></label>
+      <label><input type="radio" name="service" value="youtube"><span>YouTube</span></label>
+      <label><input type="radio" name="service" value="websites"><span>Websites</span></label>
+      <label><input type="radio" name="service" value="documents"><span>PDF &amp; Presentations</span></label>
+      <label><input type="radio" name="service" value="ads"><span>Ads</span></label>
+    </fieldset>
+    <fieldset class="inquiry__pkgs" data-pkgs hidden>
+      <legend>Choose your package</legend>
+      <div class="inquiry__pkglist" data-pkglist></div>
+    </fieldset>
+    <div class="inquiry__row">
+      <label class="field"><span>Full name</span><input name="name" autocomplete="name" required></label>
+      <label class="field"><span>Phone number (WhatsApp)</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01012345678" required></label>
+    </div>
+    <div class="inquiry__row">
+      <label class="field"><span>Email (optional)</span><input name="email" type="email" autocomplete="email"></label>
+      <label class="field"><span>Brand or company name</span><input name="brand" autocomplete="organization" required></label>
+    </div>
+    <label class="field"><span>Tell us about your idea briefly (optional)</span><textarea name="idea" rows="3"></textarea></label>
+    <p class="inquiry__error" role="alert" hidden></p>
+    <button class="btn btn--amber btn--big" type="submit" data-magnetic><span>START A PROJECT</span></button>
+    <p class="inquiry__hint">After you submit, we contact you on WhatsApp.</p>
+  </form>
+  <div class="inquiry__done" hidden>
+    <svg viewBox="0 0 1932 1932" class="inquiry__mark"><use href="#pmark"/></svg>
+    <p class="display">Brief sent.</p>
+    <p>Thanks — we received your request and will contact you on WhatsApp very soon.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__word" aria-hidden="true">PHAROSLINE</div>
+  <ul class="social" aria-label="Pharosline on social media">
+    <li><a href="https://www.instagram.com/pharosline?stkn=MXVldXdtN2thb3o3OQ==" target="_blank" rel="noopener" aria-label="Instagram — @pharosline" data-magnetic>
+      <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="f"/></svg></span>
+      <span class="social__name">Instagram</span><span class="social__handle">@pharosline</span></a></li>
+    <li><a href="https://www.facebook.com/share/1DWTSjocNN/" target="_blank" rel="noopener" aria-label="Facebook — Pharosline" data-magnetic>
+      <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H9v3h2.5V21" class="f"/></svg></span>
+      <span class="social__name">Facebook</span><span class="social__handle">Pharosline</span></a></li>
+    <li><a href="https://www.tiktok.com/@pharosline?_r=1&amp;_t=ZS-9ALi3fgLxhO" target="_blank" rel="noopener" aria-label="TikTok — @pharosline" data-magnetic>
+      <span class="social__tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 3c.3 2.3 1.8 3.8 4 4v3c-1.5 0-2.8-.4-4-1.2v6.3a5.9 5.9 0 1 1-5.9-5.9h.6v3.1a2.8 2.8 0 1 0 2.2 2.8V3h3.1Z" class="f"/></svg></span>
+      <span class="social__name">TikTok</span><span class="social__handle">@pharosline</span></a></li>
+  </ul>
+  <div class="foot__row">
+    <p lang="ar" dir="rtl" class="foot__ar">خلّي فكرتك تنوّر</p>
+    <nav aria-label="Footer"><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a></nav>
+    <p>© <span data-year></span> Pharosline</p>
+  </div>
+</footer>
+
+<!-- ============ CASE STUDY ============ -->
+<div class="case" role="dialog" aria-modal="true" aria-labelledby="case-title" hidden>
+  <button class="case__close" aria-label="Close case study" data-cursor="Close">Close</button>
+  <div class="case__scroll" data-lenis-prevent>
+    <header class="case__hero">
+      <video src="assets/video/scene-8.mp4" muted loop playsinline preload="none"></video>
+      <div class="case__hero-copy">
+        <h2 id="case-title" class="display">Pharosline<br>brand intro</h2>
+        <dl class="case__facts">
+          <div><dt>Client</dt><dd>Pharosline (in-house)</dd></div>
+          <div><dt>Deliverables</dt><dd>Logo mark, key visual, 8-scene motion film</dd></div>
+          <div><dt>Format</dt><dd>16:9, 1280×720, about 42 seconds</dd></div>
+        </dl>
+      </div>
+    </header>
+    <section class="case__block">
+      <h3>Challenge</h3>
+      <p>Introduce a brand-new agency and everything it makes — videos, ads, websites, design and content plans — in one short film, without it feeling like a list.</p>
+    </section>
+    <section class="case__block case__block--split">
+      <div><h3>Strategy</h3><p>Tell it as a story the audience already lives: a phone full of noise, a single idea that lights up, the craft that shapes it, and the moment it reaches people.</p></div>
+      <div><h3>Creative direction</h3><p>Halftone photo cut-outs, torn paper, masking tape and one amber brush stroke — set on warm paper, framed by an editing timeline that keeps the film's own making visible.</p></div>
+    </section>
+    <section class="case__exec">
+      <h3>Execution, scene by scene</h3>
+      <div class="case__scenes" data-case-scenes></div>
+    </section>
+    <section class="case__block case__block--split">
+      <div><h3>Brand applications</h3><p>The mark — a heavy P with an amber block as its lamp — carries from the logo into every frame of the film, the key visual and this website.</p></div>
+      <figure class="case__ba"><img loading="lazy" decoding="async" data-src="assets/img/mark.jpg" alt="Pharosline P mark"><img loading="lazy" decoding="async" data-src="assets/img/keyvisual.jpg" alt="Pharosline key visual"></figure>
+    </section>
+    <section class="case__block case__final">
+      <h3>Final film</h3>
+      <video src="assets/video/scene-8.mp4" controls playsinline preload="none" data-poster="assets/img/keyvisual.jpg" data-case-final></video>
+      <p class="case__note">Performance results for this project haven't been published, so we don't show any.</p>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/pricing.js"></script>
+<script type="module" src="js/inquiry.js"></script>
+<script type="module" src="js/adStats.js"></script>
+<script type="module" src="js/faq.js"></script>
+<script type="module" src="js/reviews.js"></script>
+</body>
+</html>
