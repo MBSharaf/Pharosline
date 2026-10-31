@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found — Pharosline</title>
 <meta name="robots" content="noindex">
-<link rel="icon" type="image/png" sizes="32x32" href="/Pharosline/assets/img/icon-32.png">
+<script>
+  // GitHub Pages serves the site under /Pharosline/; localhost and a custom domain serve it from /
+  var BASE = location.pathname.indexOf('/Pharosline/') === 0 ? '/Pharosline/' : '/';
+  document.write('<link rel="icon" type="image/png" sizes="32x32" href="' + BASE + 'assets/img/icon-32.png">');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Familjen+Grotesk:wght@400;600&display=swap" rel="stylesheet">
@@ -38,7 +42,8 @@
   <h1>This page went dark</h1>
   <p>The link may be old or mistyped. Head back and let the lighthouse guide you.</p>
   <p class="ar" lang="ar" dir="rtl">خلّي فكرتك تنوّر</p>
-  <a class="btn" href="/Pharosline/">BACK TO PHAROSLINE</a>
+  <a class="btn" href="/" data-home>BACK TO PHAROSLINE</a>
 </main>
+<script>document.querySelector('[data-home]').href = BASE;</script>
 </body>
 </html>
