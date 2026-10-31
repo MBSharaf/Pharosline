@@ -2,6 +2,8 @@
 // Branded pop-up notification ("toast"). Used after an order or a review is sent.
 // toast({ title, text, type: 'success' | 'error' })
 
+import { t } from './i18n.js';
+
 const gsap = /** @type {any} */ (window).gsap;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -23,7 +25,7 @@ export function toast({ title, text = '', type = 'success', duration = 6500 }) {
   el.innerHTML = `
     <span class="toast__lamp">${ICON[type]}</span>
     <div class="toast__body"><strong>${title}</strong>${text ? `<span>${text}</span>` : ''}</div>
-    <button class="toast__close" type="button" aria-label="Close notification">×</button>
+    <button class="toast__close" type="button" aria-label="${t('Close notification', 'اقفل الإشعار')}">×</button>
     <i class="toast__timer" aria-hidden="true"></i>`;
   host.append(el);
 

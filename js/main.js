@@ -1,4 +1,5 @@
 import { initHero } from './hero3d.js';
+import { t } from './i18n.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -8,65 +9,22 @@ const { gsap, ScrollTrigger } = window;
 gsap.registerPlugin(ScrollTrigger);
 
 /* ------------------------------------------------------------------
-   Content — only Pharosline's real material.
+   Content — only Pharosline's real websites. "View screens" opens these.
 ------------------------------------------------------------------ */
-const SCENES = [
-  { src: 'assets/video/scene-1.mp4', dur: 6, name: 'The noise', note: 'A phone buried under a pile of torn photos, film strips and scribbles — the feed everyone lives in.' },
-  { src: 'assets/video/scene-2.mp4', dur: 4, name: 'Clear the page', note: 'One amber brush stroke wipes the frame clean, arrows pulling focus to the centre.' },
-  { src: 'assets/video/scene-3.mp4', dur: 4, name: 'The idea', note: 'A halftone profile with an amber lightbulb — the moment the idea switches on.' },
-  { src: 'assets/video/scene-4.mp4', dur: 4, name: 'What we make', note: 'Videos, ads, websites, design and content plans, each on its own torn card.' },
-  { src: 'assets/video/scene-5.mp4', dur: 6, name: 'Every format', note: 'Taped frames for YouTube, social, ads, reels and documents.' },
-  { src: 'assets/video/scene-6.mp4', dur: 6, name: 'On the timeline', note: 'A stack of collage cards circled in amber, with the edit playhead running beneath.' },
-  { src: 'assets/video/scene-7.mp4', dur: 6, name: 'Light it up', note: 'A halftone sunburst behind the brush stroke — the idea starts to shine.' },
-  { src: 'assets/video/scene-8.mp4', dur: 6, name: 'Pharosline', note: 'The P mark and wordmark resolve on paper. خلّي فكرتك تنوّر.' },
-];
-
-// Selected work — real Pharosline projects (mirrors what's shown in "What we make").
-// gallery: what opens in the viewer. case: true opens the brand-intro case study instead.
-const WORK = [
-  { id: 'showreel', size: 'xl', cats: ['motion'], title: 'Pharosline showreel', cat: 'Motion · 2026 reel',
-    desc: 'Social posts, ad campaigns, motion and identity work, cut into one 35-second reel.',
-    img: 'assets/showreel/poster.jpg', video: 'assets/showreel/pharosline_showreel_720p.mp4', badge: 'Watch with sound',
-    gallery: [{ type: 'video', src: 'assets/showreel/pharosline_showreel_1080p.mp4', poster: 'assets/showreel/poster.jpg', sound: true }] },
-  { id: 'reel-collage', size: 'v', cats: ['reels'], title: 'Collage reel', cat: 'Reel · 9:16',
-    desc: 'A vertical cut in our paper-collage style, made for the scroll.',
-    video: 'assets/video/Pharosline_3_collage.mp4',
-    gallery: [{ type: 'video', src: 'assets/video/Pharosline_3_collage.mp4', vertical: true }] },
-  { id: 'fitme', size: 'l', cats: ['websites'], title: 'Fitme brand website', cat: 'Website · Design + build',
-    desc: 'A brand website for Fitme: bold product sections, smooth scrolling and motion from the first screen.',
-    video: 'assets/video/fitme-website.mp4', badge: 'Live walkthrough',
-    gallery: [{ type: 'video', src: 'assets/video/fitme-website.mp4' }] },  { id: 'meta-ads', size: 'l', cats: ['ads'], title: 'Meta ad campaigns', cat: 'Advertising · Results',
-    desc: '8 campaigns, 4,100+ messaging conversations, EGP 2.09 average cost per conversation. Brand names hidden.',
-    img: 'assets/img/ads-collage-1.jpg', badge: 'Real results',
-    gallery: [{ type: 'image', src: 'assets/img/ads-collage-1.jpg' }, { type: 'image', src: 'assets/img/ads-collage-2.jpg' }, { type: 'image', src: 'assets/img/ads-collage-3.jpg' }] },
-  { id: 'october', size: '', cats: ['motion'], title: 'October War 1973', cat: 'Motion graphic video',
-    desc: 'A halftone archive story: the 1973 crossing and the Zamalek cup, told in 19 seconds.',
-    img: 'assets/video/october-war-poster.jpg', video: 'assets/video/october-war-card.mp4',
-    gallery: [{ type: 'video', src: 'assets/video/october-war-card.mp4', poster: 'assets/video/october-war-poster.jpg' }] },
-  { id: 'roaming', size: '', cats: ['documents'], title: 'Roaming guide', cat: 'Presentation · 4 pages',
-    desc: 'Airplane mode, data roaming, international numbers and SIM checks — explained page by page.',
-    img: 'assets/img/docs-3-airplane-mode.jpg',
-    gallery: ['docs-3-airplane-mode', 'pdf-image-2-data-roaming', 'pdf-image-3-intl-number', 'docs-4-hlr-view'].map(n => ({ type: 'image', src: `assets/img/${n}.jpg` })) },
-  { id: 'dental', size: '', cats: ['ads'], title: 'Dental lab equipment posts', cat: 'Social media design',
-    desc: 'A product post series for a dental technology importer — one machine, one bold Arabic headline per post.',
-    img: 'assets/img/docs-2-idt-scanner.jpg', imgPos: 'center 35%',
-    gallery: [{ type: 'image', src: 'assets/img/docs-2-idt-scanner.jpg' }] },
-  { id: 'reel-saas', size: 'v', cats: ['reels'], title: 'Product reel', cat: 'Reel · 9:16',
-    desc: 'A fast vertical product reel, built for short-form feeds.',
-    video: 'assets/video/Pharosline_4_saas.mp4',
-    gallery: [{ type: 'video', src: 'assets/video/Pharosline_4_saas.mp4', vertical: true }] },
-  { id: 'october-cover', size: 'xl', cats: ['documents'], title: 'October 1973 cover', cat: 'Editorial design',
-    desc: 'A collage cover: the year in halftone, a radio, a football and the crowd.',
-    img: 'assets/img/docs-1-october-1973.jpg',
-    gallery: [{ type: 'image', src: 'assets/img/docs-1-october-1973.jpg' }] },
-  { id: 'intro', size: 'l', cats: ['branding', 'motion'], title: 'Pharosline brand intro', cat: 'Identity + motion film',
-    desc: 'Our own launch: the P mark, key visual and an 8-scene brand film.',
-    img: 'assets/img/f1-collage.jpg', video: 'assets/video/scene-1.mp4', badge: 'Case study', case: true },
-  { id: 'mark', size: 'l', cats: ['branding'], title: 'The P mark', cat: 'Brand identity',
-    desc: 'A heavy P whose amber block works as the lamp of a lighthouse.',
-    img: 'assets/img/mark.jpg',
-    gallery: [{ type: 'image', src: 'assets/img/mark.jpg' }, { type: 'image', src: 'assets/img/keyvisual.jpg' }] },
-];
+const shot = (src, en, ar) => ({ type: 'image', src: `assets/work/${src}.jpg`, alt: t(en, ar) });
+const GALLERIES = {
+  idt: { title: 'IDT', cat: t('Website · Dental technology', 'موقع · تكنولوجيا الأسنان'),
+    desc: t('Live at mbsharaf.github.io/IDT — interactive 3D machines, product catalog and inquiry forms.', 'شغّال على mbsharaf.github.io/IDT — موديلات 3D تفاعلية للماكينات، كتالوج منتجات، وفورم استفسار.'),
+    gallery: [shot('idt-home', 'Home page', 'الصفحة الرئيسية'), shot('idt-workflow', 'The 4-step lab story', 'قصة المعمل في 4 خطوات'),
+      shot('idt-products', 'Featured machines', 'الماكينات المميزة'), shot('idt-product-3d', 'Machine page with the 3D model', 'صفحة الماكينة بالموديل الـ 3D'),
+      { type: 'video', src: 'assets/work/idt-3d.mp4', poster: 'assets/work/idt-3d.jpg' },
+      shot('idt-mobile', 'On a phone', 'على الموبايل'), shot('idt-mobile-3d', '3D model on a phone', 'الموديل الـ 3D على الموبايل')] },
+  super: { title: 'Super App', cat: t('Website · Sports booking platform', 'موقع · منصة حجز رياضية'),
+    desc: t('Live at mbsharaf.github.io/super-app — pitch booking, players, tournaments, fantasy and a shop.', 'شغّال على mbsharaf.github.io/super-app — حجز ملاعب، لاعيبة، بطولات، فانتازي، ومتجر.'),
+    gallery: [shot('super-home', 'Home page', 'الصفحة الرئيسية'), shot('super-pitches', 'Book a pitch', 'احجز ملعب'),
+      shot('super-fantasy', 'Fantasy league', 'الفانتازي'), shot('super-shop', 'The shop', 'المتجر'),
+      shot('super-mobile', 'On a phone', 'على الموبايل'), shot('super-mobile-fantasy', 'Fantasy on a phone', 'الفانتازي على الموبايل')] },
+};
 
 /* ------------------------------------------------------------------
    Smooth scroll
@@ -75,7 +33,7 @@ let lenis = null;
 if (!reduced && window.Lenis) {
   lenis = new window.Lenis({ duration: 1.15, smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.add(time => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
   lenis.stop();
 }
@@ -98,6 +56,13 @@ document.addEventListener('click', e => {
   closeMenu();
   scrollTo(id === '#top' ? 0 : id);
 });
+
+// language switch: land on the same section in the other language
+$$('[data-lang-link]').forEach(a => a.addEventListener('click', () => {
+  const y = scrollY + innerHeight * .4;
+  const here = $$('main section[id]').filter(s => s.offsetTop <= y).pop();
+  a.href = a.getAttribute('href').split('#')[0] + (here ? '#' + here.id : '');
+}));
 
 /* ------------------------------------------------------------------
    Cursor + magnetic
@@ -145,10 +110,16 @@ function intro() {
     .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 1, ease: 'expo.inOut' }, 1.6)
     .from('.hero__line span', { yPercent: 105, duration: 1.4, stagger: .12 }, 2.0)
     .to(hero ? hero.state : {}, { intro: 1, duration: 2.4, ease: 'power3.out' }, 2.0)
+    .from('.offer-tag', { y: 30, opacity: 0, rotate: -12, duration: 1.1 }, 2.3)
     .from('.hero__kicker, .hero__ar, .hero__lede', { y: 30, opacity: 0, duration: 1.1, stagger: .08 }, 2.4)
     .from('.hero__ctas .btn', { y: 30, opacity: 0, duration: 1.1, stagger: .08 }, 2.6)
     .from('.nav', { y: -30, opacity: 0, duration: 1 }, 2.5)
-    .add(() => { document.body.classList.remove('is-loading'); lenis?.start(); $('.timeline').classList.add('is-on'); ScrollTrigger.refresh(); }, 2.6);
+    .add(() => {
+      document.body.classList.remove('is-loading'); lenis?.start(); $('.timeline').classList.add('is-on'); ScrollTrigger.refresh();
+      // arrived with #section (e.g. from the language switch): the pins changed the page height, so land on it now
+      const target = location.hash.length > 1 && $(location.hash);
+      if (target) lenis ? lenis.scrollTo(target, { immediate: true }) : target.scrollIntoView();
+    }, 2.6);
   if (reduced) tl.progress(1);
 }
 const kick = () => (document.fonts?.ready || Promise.resolve()).then(intro);
@@ -167,8 +138,9 @@ gsap.to('.hero__ui', { y: -80, opacity: 0, ease: 'none', scrollTrigger: { trigge
    Manifesto — words switch on like a filament as you scroll
 ------------------------------------------------------------------ */
 const mText = $('[data-light-words]');
-const amberWords = new Set(['signal', 'signal:', 'idea']);
-mText.innerHTML = mText.textContent.trim().split(/\s+/).map(w => `<span class="w${amberWords.has(w.toLowerCase().replace(/[^a-z:]/g, '')) ? ' amb' : ''}">${w}</span>`).join(' ');
+const norm = w => w.replace(/[^\p{L}\p{N}]/gu, '').toLowerCase();
+const amberWords = new Set((mText.dataset.amber || '').split(/\s+/).map(norm));
+mText.innerHTML = mText.textContent.trim().split(/\s+/).map(w => `<span class="w${amberWords.has(norm(w)) ? ' amb' : ''}">${w}</span>`).join(' ');
 const words = $$('.w', mText);
 ScrollTrigger.create({
   trigger: mText, start: 'top 80%', end: 'bottom 45%', scrub: true,
@@ -179,163 +151,98 @@ ScrollTrigger.create({
 });
 
 /* ------------------------------------------------------------------
-   Showreel — one film with music; the visitor starts it (no autoplay)
+   Videos — load near view, play only while on screen
 ------------------------------------------------------------------ */
-const reelVideo = $('.reel__video'), reel = $('.reel');
-const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
-// the original segmented scrubber: the film split into equal parts that fill as it plays
-const reelBar = $('[data-reel-bar]'), PARTS = 8;
-reelBar.innerHTML = Array.from({ length: PARTS }, (_, i) => `<button style="--d:1" aria-label="Jump to part ${i + 1}" data-i="${i}"></button>`).join('');
-const partBtns = $$('button', reelBar);
-reelVideo.addEventListener('timeupdate', () => {
-  const d = reelVideo.duration || 0, p = d ? reelVideo.currentTime / d * PARTS : 0;
-  partBtns.forEach((b, i) => b.style.setProperty('--p', Math.min(1, Math.max(0, p - i)).toFixed(3)));
-  $('[data-reel-tc]').textContent = `${fmt(reelVideo.currentTime)} / ${fmt(d)}`;
-});
-reelVideo.addEventListener('loadedmetadata', () => { $('[data-reel-tc]').textContent = `00:00 / ${fmt(reelVideo.duration)}`; });
-reelBar.addEventListener('click', e => {
-  const b = e.target.closest('button');
-  if (b && reelVideo.duration) { reelVideo.currentTime = +b.dataset.i / PARTS * reelVideo.duration; reelVideo.play().catch(() => {}); }
-});
-// plays muted on its own; the amber button (or the native controls) turns the sound on
-reelVideo.addEventListener('volumechange', () => reel.classList.toggle('is-playing', !reelVideo.muted));
-$('.reel__play').addEventListener('click', e => { e.stopPropagation(); reelVideo.muted = false; reelVideo.play().catch(() => {}); });
-ScrollTrigger.create({ trigger: reel, start: 'top 60%', end: 'bottom 20%', onEnter: () => reelVideo.play().catch(() => {}), onEnterBack: () => reelVideo.play().catch(() => {}) });// pause when the visitor scrolls away
-ScrollTrigger.create({ trigger: reel, start: 'top bottom', end: 'bottom top', onLeave: () => reelVideo.pause(), onLeaveBack: () => reelVideo.pause() });
-// widest the showreel can be while the whole 16:9 frame + its scrubber still fits on screen
-const reelMaxW = () => (innerHeight - 120) * 16 / 9;
-if (!reduced) {
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 721px)', () => {
-    gsap.timeline({ scrollTrigger: { trigger: reel, start: 'top top', end: 'bottom bottom', scrub: 1, invalidateOnRefresh: true } })
-      .fromTo('.reel__frame', { rotateX: 24, rotateY: -18, rotateZ: 4 }, { rotateX: 0, rotateY: 0, rotateZ: 0, ease: 'power2.out', duration: .5 }, 0)
-      .fromTo('.reel__stage', { width: () => Math.min(innerWidth * .46, reelMaxW()) }, { width: () => Math.min(innerWidth * .92, reelMaxW()), ease: 'power2.inOut', duration: .6 }, 0)
-      .to('.reel__heading', { opacity: 0, y: -60, duration: .3 }, .2)
-      .to('.reel__stage', { y: 0, duration: .4 }, .6);
-  });
-  mm.add('(max-width: 720px)', () => {
-    gsap.fromTo('.reel__frame', { rotateX: 20, rotateZ: 3 }, { rotateX: 0, rotateZ: 0, scrollTrigger: { trigger: reel, start: 'top top', end: '40% top', scrub: 1 } });
-  });
+{
+  const load = v => { if (v.dataset.src && !v.getAttribute('src')) { if (v.dataset.poster) v.poster = v.dataset.poster; v.src = v.dataset.src; } };
+  const near = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { load(e.target); near.unobserve(e.target); } }), { rootMargin: '900px 0px' });
+  const onScreen = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting && !reduced) { load(v); v.play().catch(() => {}); } else v.pause();
+  }), { threshold: .2 });
+  $$('video[data-src]').forEach(v => { near.observe(v); if (v.hasAttribute('data-autoplay')) onScreen.observe(v); });
+  // reduced motion: show posters, never autoplay
+  if (reduced) $$('video[data-poster]').forEach(v => { v.poster = v.dataset.poster; });
 }
 
 /* ------------------------------------------------------------------
-   Services — tabs with per-craft scenes
+   Work — 3D devices: the laptop opens and turns, the phone and the
+   3D card slide in, all scrubbed by scroll while the project is pinned
 ------------------------------------------------------------------ */
-const svcTabs = $$('[data-svc]'), panels = $$('[data-panel]');
-function showSvc(i) {
-  svcTabs.forEach((t, j) => t.setAttribute('aria-selected', j === i));
-  panels.forEach((p, j) => {
-    const on = j === i;
-    p.classList.toggle('is-active', on);
-    $$('video', p).forEach(v => on ? v.play().catch(() => {}) : v.pause());
-    if (on && !reduced) {
-      gsap.fromTo(p.firstElementChild, { opacity: 0, y: 60, rotateX: -25, scale: .92 }, { opacity: 1, y: 0, rotateX: 0, scale: 1, duration: 1.1, ease: 'expo.out', clearProps: 'transform' });
+const shows = $$('[data-show]');
+const mmShow = gsap.matchMedia();
+mmShow.add({ desk: '(min-width: 1025px)', small: '(max-width: 1024px)', reduce: '(prefers-reduced-motion: reduce)' }, ctx => {
+  const { desk, reduce } = ctx.conditions;
+  shows.forEach(show => {
+    const flip = show.classList.contains('show--flip') ? -1 : 1;
+    const laptop = $('.laptop', show), lid = $('.laptop__lid', show), phone = $('.show__phone', show), float = $('.show__float', show);
+    const copy = $$('.show__copy > *', show);
+    if (reduce) return;
+    if (desk) {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: show, start: 'top top', end: 'bottom bottom', scrub: 1 } });
+      tl.fromTo(laptop, { rotateX: 30, rotateY: -34 * flip, rotateZ: 3 * flip, scale: .78, y: 60 }, { rotateX: 6, rotateY: -12 * flip, rotateZ: 0, scale: 1, y: 0, ease: 'power2.out', duration: .5 }, 0)
+        .fromTo(lid, { rotateX: -92 }, { rotateX: 0, ease: 'power3.out', duration: .42 }, 0)
+        .fromTo(copy, { y: 50, opacity: 0 }, { y: 0, opacity: 1, stagger: .03, duration: .25, ease: 'power2.out' }, .05)
+        .fromTo(phone, { x: -160 * flip, y: 80, rotateY: 50 * flip, rotateZ: -8 * flip, opacity: 0 }, { x: 0, y: 0, rotateY: 16 * flip, rotateZ: 3 * flip, opacity: 1, ease: 'power3.out', duration: .35 }, .3)
+        .fromTo(float, { y: 220, rotateX: 40, rotateZ: -12 * flip, opacity: 0 }, { y: 0, rotateX: 0, rotateZ: 5 * flip, opacity: 1, ease: 'power3.out', duration: .35 }, .42)
+        .to(laptop, { rotateY: -4 * flip, rotateX: 2, duration: .3, ease: 'none' }, .7)
+        .to(phone, { y: -40, duration: .3, ease: 'none' }, .7)
+        .to(float, { y: -70, duration: .3, ease: 'none' }, .7);
+      // the whole stage leans toward the cursor
+      const stage = $('.show__stage', show);
+      if (fine) {
+        const ry = gsap.quickTo(stage, 'rotateY', { duration: 1, ease: 'power3' }), rx = gsap.quickTo(stage, 'rotateX', { duration: 1, ease: 'power3' });
+        show.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - .5) * 10); rx(-((e.clientY - r.top) / r.height - .5) * 8); });
+        show.addEventListener('pointerleave', () => { ry(0); rx(0); });
+      }
+    } else {
+      gsap.timeline({ scrollTrigger: { trigger: $('.show__stage', show), start: 'top 90%', end: 'center 55%', scrub: 1 } })
+        .fromTo(laptop, { rotateX: 34, rotateY: -22 * flip, scale: .86 }, { rotateX: 6, rotateY: -8 * flip, scale: 1, ease: 'power2.out' }, 0)
+        .fromTo(lid, { rotateX: -92 }, { rotateX: 0, ease: 'power3.out' }, 0)
+        .fromTo(phone, { x: -70 * flip, rotateY: 40 * flip, opacity: 0 }, { x: 0, rotateY: 12 * flip, opacity: 1, ease: 'power3.out' }, .3)
+        .fromTo(float, { y: 90, rotateZ: 10 * flip, opacity: 0 }, { y: 0, rotateZ: -4 * flip, opacity: 1, ease: 'power3.out' }, .45);
+      gsap.from(copy, { y: 40, opacity: 0, stagger: .06, duration: .8, ease: 'expo.out', scrollTrigger: { trigger: $('.show__copy', show), start: 'top 85%' } });
     }
   });
-}
-svcTabs.forEach((t, i) => {
-  t.addEventListener('click', () => showSvc(i));
-  if (fine) t.addEventListener('pointerenter', () => showSvc(i));
-  t.addEventListener('keydown', e => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); const n = (i + (e.key === 'ArrowDown' ? 1 : -1) + svcTabs.length) % svcTabs.length; svcTabs[n].focus(); showSvc(n); }
-  });
-});
-let svcPicked = false;
-svcTabs.forEach(t => t.addEventListener('click', () => { svcPicked = true; }));
-ScrollTrigger.create({ trigger: '.services', start: 'top 70%', once: true, onEnter: () => { if (!svcPicked) showSvc(0); } });
-// stage leans toward the cursor
-const stage = $('.services__stage');
-if (fine && !reduced) stage.addEventListener('pointermove', e => {
-  const r = stage.getBoundingClientRect();
-  gsap.to(stage, { rotateY: ((e.clientX - r.left) / r.width - .5) * 8, rotateX: -((e.clientY - r.top) / r.height - .5) * 8, duration: 1, ease: 'power3' });
+  const mini = $('.show-mini__frame');
+  if (mini && !reduce) gsap.fromTo(mini, { rotateX: 24, rotateY: 18, y: 60 }, { rotateX: 4, rotateY: -6, y: 0, ease: 'none', scrollTrigger: { trigger: '.show-mini', start: 'top bottom', end: 'center center', scrub: 1 } });
 });
 
 /* ------------------------------------------------------------------
-   Selected work
+   Any website you need — cards deal in
 ------------------------------------------------------------------ */
-const grid = $('[data-work-grid]');
-grid.innerHTML = WORK.map(w => `
-  <article class="card ${w.size ? 'card--' + w.size : ''}" data-cats="${w.cats.join(' ')}" data-id="${w.id}" tabindex="0" role="button" aria-label="${w.title} — ${w.case ? 'open case study' : 'view project'}" data-cursor="${w.video ? 'Play' : 'View'}">
-    <div class="card__media">
-      ${w.img ? `<img src="${w.img}" alt="" loading="lazy"${w.imgPos ? ` style="object-position:${w.imgPos}"` : ''}>` : ''}
-      ${w.video ? `<video src="${w.video}${w.img ? '' : '#t=0.6'}" muted loop playsinline preload="${w.img ? 'none' : 'metadata'}"${w.img ? '' : ' class="is-poster"'}></video>` : ''}
-      ${w.badge ? `<span class="card__badge">${w.badge}</span>` : ''}
-      <i class="card__wipe"></i>
-    </div>
-    <div class="card__info"><h3 class="card__title">${w.title}</h3><span class="card__cat">${w.cat}</span><p class="card__desc">${w.desc}</p></div>
-  </article>`).join('');
-const cards = $$('.card', grid);
-cards.forEach(c => {
-  const v = $('video', c), media = $('.card__media', c);
-  c.addEventListener('pointerenter', () => v?.play().catch(() => {}));
-  c.addEventListener('pointerleave', () => { v?.pause(); gsap.to(media, { rotateX: 0, rotateY: 0, duration: .8, ease: 'power3' }); });
-  if (fine && !reduced) c.addEventListener('pointermove', e => {
-    const r = media.getBoundingClientRect();
-    gsap.to(media, { rotateY: ((e.clientX - r.left) / r.width - .5) * 10, rotateX: -((e.clientY - r.top) / r.height - .5) * 10, duration: .6, ease: 'power3' });
-  });
-  c.addEventListener('click', () => openWork(c));
-  c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(c); } });
-});
-// touch devices: play cards while they're centred
-if (!fine) cards.forEach(c => ScrollTrigger.create({ trigger: c, start: 'top 60%', end: 'bottom 40%', onToggle: s => { const v = $('video', c); if (!v) return; s.isActive ? v.play().catch(() => {}) : v.pause(); c.classList.toggle('is-playing', s.isActive); } }));
-
-// counts on filters
-$$('.filters button').forEach(b => {
-  const f = b.dataset.filter, n = f === 'all' ? WORK.length : WORK.filter(w => w.cats.includes(f)).length;
-  b.insertAdjacentHTML('beforeend', `<sup>${n}</sup>`);
-});
-function reveal(els) {
-  if (reduced) return;
-  els.forEach((c, i) => {
-    const wipe = $('.card__wipe', c);
-    gsap.timeline({ delay: i * .07 })
-      .fromTo(wipe, { scaleY: 0, transformOrigin: 'bottom' }, { scaleY: 1, duration: .45, ease: 'power3.in' })
-      .set(wipe, { transformOrigin: 'top' })
-      .to(wipe, { scaleY: 0, duration: .6, ease: 'power3.out' })
-      .fromTo(c, { y: 40 }, { y: 0, duration: 1, ease: 'expo.out' }, 0);
-  });
+if (!reduced) {
+  ScrollTrigger.batch('.type', { start: 'top 88%', once: true, onEnter: els => gsap.fromTo(els, { y: 60, rotate: (i) => (i % 2 ? 3 : -3), opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: .9, stagger: .07, ease: 'expo.out', clearProps: 'transform' }) });
+  gsap.from('.includes__list li', { y: 30, opacity: 0, stagger: .08, duration: .8, ease: 'expo.out', scrollTrigger: { trigger: '.includes', start: 'top 85%' } });
 }
-$('.filters').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
-  $$('.filters button').forEach(x => x.classList.toggle('is-on', x === b));
-  const f = b.dataset.filter;
-  const shown = cards.filter(c => f === 'all' || c.dataset.cats.split(' ').includes(f));
-  cards.forEach(c => c.classList.toggle('is-hidden', !shown.includes(c)));
-  $('.work__empty').hidden = shown.length > 0;
-  if (!shown.length && !reduced) gsap.fromTo('.work__empty', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .8, ease: 'expo.out' });
-  reveal(shown);
-  ScrollTrigger.refresh();
-});
-ScrollTrigger.batch(cards, { start: 'top 88%', once: true, onEnter: reveal });
 
 /* ------------------------------------------------------------------
-   Case study overlay
+   Reels — muted while in view; the speaker turns sound on (one at a time)
 ------------------------------------------------------------------ */
-const caseEl = $('.case');
-$('[data-case-scenes]').innerHTML = SCENES.map((s, i) => `
-  <figure><video src="${s.src}" muted loop playsinline preload="none"></video>
-  <figcaption><b>${String(i + 1).padStart(2, '0')} ${s.name}</b>${s.note}</figcaption></figure>`).join('');
-const caseVids = $$('.case__scenes video');
-const caseIO = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { root: $('.case__scroll'), threshold: .3 });
-caseVids.forEach(v => caseIO.observe(v));
-let lastFocus = null;
-function openCase(from) {
-  lastFocus = from;
-  caseEl.hidden = false; lenis?.stop(); document.body.style.overflow = 'hidden';
-  $('.case__scroll').scrollTop = 0;
-  $$('video[data-poster]', caseEl).forEach(v => { v.poster = v.dataset.poster; });
-  $$('img[data-src]', caseEl).forEach(i => { i.src = i.dataset.src; });
-  $('.case__hero video').play().catch(() => {});
-  gsap.fromTo(caseEl, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: reduced ? 0 : 1.1, ease: 'expo.inOut' });
-  gsap.from('.case__hero-copy > *', { y: 60, opacity: 0, duration: 1, stagger: .1, delay: .6, ease: 'expo.out' });
-  $('.case__close').focus({ preventScroll: true });
+{
+  const reels = $$('[data-reel]');
+  const vids = reels.map(r => $('video', r));
+  const setSound = (i, on) => {
+    vids.forEach((v, j) => {
+      const s = j === i && on, btn = $('.reel-card__sound', reels[j]);
+      v.muted = !s; reels[j].classList.toggle('has-sound', s);
+      btn.setAttribute('aria-pressed', String(s));
+      btn.setAttribute('aria-label', s ? t('Mute', 'اكتم الصوت') : t('Turn sound on', 'شغّل الصوت'));
+    });
+  };
+  reels.forEach((r, i) => {
+    const v = vids[i];
+    $('.reel-card__sound', r).addEventListener('click', () => {
+      if (!v.getAttribute('src')) { v.poster = v.dataset.poster; v.src = v.dataset.src; }
+      setSound(i, v.muted); v.play().catch(() => {});
+    });
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !reduced) { if (!v.getAttribute('src')) { v.poster = v.dataset.poster; v.src = v.dataset.src; } v.play().catch(() => {}); }
+      else { v.pause(); if (!v.muted) setSound(i, false); }
+    }, { threshold: .35 }).observe(r);
+  });
+  if (!reduced) gsap.fromTo('.reel-card__phone', { rotateY: i => (i ? -28 : 28), rotateX: 14, y: 80 }, { rotateY: i => (i ? -8 : 8), rotateX: 0, y: 0, ease: 'none', scrollTrigger: { trigger: '.reels__row', start: 'top bottom', end: 'center center', scrub: 1 } });
 }
-function closeCase() {
-  $$('video', caseEl).forEach(v => v.pause());
-  gsap.to(caseEl, { clipPath: 'inset(0 0 100% 0)', duration: reduced ? 0 : .9, ease: 'expo.inOut', onComplete: () => { caseEl.hidden = true; document.body.style.overflow = ''; lenis?.start(); lastFocus?.focus({ preventScroll: true }); } });
-}
-$('.case__close').addEventListener('click', closeCase);
-addEventListener('keydown', e => { if (e.key === 'Escape' && !caseEl.hidden) closeCase(); });
 
 /* ------------------------------------------------------------------
    Process — scroll scrubs a playhead across five clips
@@ -362,84 +269,6 @@ mmP.add('(min-width: 0px)', () => {
 clips[0].classList.add('is-on');
 
 /* ------------------------------------------------------------------
-   Playground
------------------------------------------------------------------- */
-// 1. Night watch — a lighthouse beam from the corner lamp, aimed by the cursor
-const beamBox = $('.exp__beam');
-let beamVisible = false;
-new IntersectionObserver(([e]) => { beamVisible = e.isIntersecting; }).observe(beamBox);
-(() => {
-  let tx = .6, ty = .4, cx = tx, cy = ty, auto = true, t0 = performance.now();
-  beamBox.addEventListener('pointermove', e => { const r = beamBox.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width; ty = (e.clientY - r.top) / r.height; auto = false; });
-  beamBox.addEventListener('pointerleave', () => auto = true);
-  const dark = $('.exp__dark');
-  (function tick(now) {
-    requestAnimationFrame(tick);
-    if (!beamVisible) return; // skip work while off-screen
-    if (auto) { const k = (now - t0) / 1000; tx = .5 + Math.sin(k * .6) * .35; ty = .4 + Math.cos(k * .4) * .2; }
-    cx += (tx - cx) * .08; cy += (ty - cy) * .08;
-    const r = beamBox.getBoundingClientRect();
-    const ang = Math.atan2(cx * r.width, -(cy * r.height - r.height)) * 180 / Math.PI;
-    dark.style.setProperty('--a', ang.toFixed(1) + 'deg');
-    dark.style.setProperty('--mx', (cx * 100).toFixed(1) + '%');
-    dark.style.setProperty('--my', (cy * 100).toFixed(1) + '%');
-  })(performance.now());
-})();
-
-// 2. Halftone tagline
-(() => {
-  const cv = $('[data-halftone]'), ctx = cv.getContext('2d');
-  const off = document.createElement('canvas'), octx = off.getContext('2d', { willReadFrequently: true });
-  let W, H, dpr, pts = [], mx = -999, my = -999, step;
-  function build() {
-    dpr = Math.min(devicePixelRatio, 2);
-    W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr;
-    off.width = W; off.height = H;
-    octx.fillStyle = '#000'; octx.fillRect(0, 0, W, H);
-    octx.fillStyle = '#fff'; octx.textAlign = 'center'; octx.textBaseline = 'middle';
-    octx.font = `900 ${Math.min(W * .3, H * .62)}px Cairo`;
-    octx.direction = 'rtl'; octx.fillText('تنوّر', W / 2, H * .46);
-    step = W < 500 ? 7 : 9;
-    const data = octx.getImageData(0, 0, W, H).data; pts = [];
-    for (let y = step / 2; y < H; y += step) for (let x = step / 2; x < W; x += step) {
-      const v = data[((y | 0) * W + (x | 0)) * 4] / 255;
-      pts.push({ x, y, v });
-    }
-  }
-  cv.parentElement.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
-  cv.parentElement.addEventListener('pointerleave', () => { mx = my = -999; });
-  let vis = false; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
-  function draw(now) {
-    requestAnimationFrame(draw); if (!vis) return;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
-    const k = now / 1000;
-    for (const p of pts) {
-      const d = Math.hypot(p.x - mx, p.y - my), near = Math.max(0, 1 - d / 140);
-      const wave = (Math.sin(p.x * .02 + k * 1.4) + 1) * .5;
-      const r = (p.v * (.32 + .12 * wave) + near * .45) * step * .5 + .5;
-      ctx.fillStyle = near > .05 ? `rgba(221,153,51,${.4 + near * .6})` : (p.v > .5 ? '#F2ECDF' : 'rgba(242,236,223,.14)');
-      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(.6, r), 0, 6.283); ctx.fill();
-    }
-  }
-  (document.fonts?.ready || Promise.resolve()).then(() => { build(); requestAnimationFrame(draw); });
-  addEventListener('resize', () => build());
-})();
-
-// 3. Cutting table — drag the film's cut-outs
-$$('[data-table] .cut').forEach(cut => {
-  let sx, sy, ox, oy, rot = parseFloat(getComputedStyle(cut).getPropertyValue('--r')) || 0;
-  cut.addEventListener('pointerdown', e => {
-    cut.setPointerCapture(e.pointerId); cut.classList.add('is-drag');
-    sx = e.clientX; sy = e.clientY; ox = gsap.getProperty(cut, 'x'); oy = gsap.getProperty(cut, 'y');
-    cut.parentElement.append(cut);
-    gsap.to(cut, { scale: 1.06, rotate: rot + (Math.random() - .5) * 10, duration: .3 });
-  });
-  cut.addEventListener('pointermove', e => { if (!cut.hasPointerCapture(e.pointerId)) return; gsap.set(cut, { x: ox + e.clientX - sx, y: oy + e.clientY - sy }); });
-  const up = () => { cut.classList.remove('is-drag'); rot = gsap.getProperty(cut, 'rotate'); gsap.to(cut, { scale: 1, duration: .6, ease: 'elastic.out(1,.5)' }); };
-  cut.addEventListener('pointerup', up); cut.addEventListener('pointercancel', up);
-});
-
-/* ------------------------------------------------------------------
    About — tilt + section reveals
 ------------------------------------------------------------------ */
 const tilt = $('[data-tilt]');
@@ -460,7 +289,7 @@ const chapters = $$('[data-chapter]');
 const clipsBar = $('.timeline__clips');
 function buildTimeline() {
   const H = document.documentElement.scrollHeight;
-  clipsBar.innerHTML = chapters.map((c, i) => `<button style="--w:${c.offsetHeight / H}" aria-label="Go to ${c.dataset.chapter}" data-ch="${i}"></button>`).join('');
+  clipsBar.innerHTML = chapters.map((c, i) => `<button style="--w:${c.offsetHeight / H}" aria-label="${t('Go to', 'روح لـ')} ${c.dataset.chapter}" data-ch="${i}"></button>`).join('');
 }
 clipsBar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) scrollTo(chapters[+b.dataset.ch]); });
 ScrollTrigger.addEventListener('refresh', buildTimeline);
@@ -485,34 +314,8 @@ addEventListener('load', () => ScrollTrigger.refresh());
 const waBtns = $$('.wa'), foot = $('.foot');
 if (foot) new IntersectionObserver(([e]) => waBtns.forEach(b => b.classList.toggle('on-amber', e.isIntersecting)), { rootMargin: '0px 0px -70px 0px' }).observe(foot);
 
-// Motion Graphic Videos card: play only while that tab is active AND on screen;
-// the editor playhead follows the clip. Reduced motion shows the poster instead.
-(() => {
-  const v = $('[data-motion-video]');
-  if (!v) return;
-  if (reduced) {
-    const img = document.createElement('img');
-    img.src = v.dataset.poster || v.poster; img.alt = 'October War 1973 motion graphic video, still frame';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-    v.replaceWith(img);
-    return;
-  }
-  const panel = v.closest('.svc'), head = $('.editor__head'), tracks = $('.editor__tracks');
-  let onScreen = false;
-  const sync = () => (onScreen && panel.classList.contains('is-active')) ? v.play().catch(() => {}) : v.pause();
-  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; sync(); }, { threshold: .25 }).observe(v);
-  new MutationObserver(sync).observe(panel, { attributes: true, attributeFilter: ['class'] });
-  head.style.animation = 'none';
-  const move = () => {
-    if (v.duration) head.style.transform = `translateX(${(v.currentTime / v.duration) * (tracks.clientWidth - 30)}px)`;
-    if (!v.paused) requestAnimationFrame(move);
-  };
-  v.addEventListener('play', () => requestAnimationFrame(move));
-  v.addEventListener('seeked', move);
-})();
-
 /* ------------------------------------------------------------------
-   Project viewer — opens a work card's real media (image gallery or video)
+   Project viewer — "View screens" opens the real screenshots
 ------------------------------------------------------------------ */
 const viewer = document.createElement('div');
 viewer.className = 'viewer'; viewer.hidden = true;
@@ -520,33 +323,28 @@ viewer.setAttribute('role', 'dialog'); viewer.setAttribute('aria-modal', 'true')
 viewer.innerHTML = `
   <div class="viewer__bar">
     <div><h2 id="viewer-title" class="viewer__title"></h2><p class="viewer__cat"></p></div>
-    <button class="viewer__close" data-cursor="Close">Close</button>
+    <button class="viewer__close" data-cursor="${t('Close', 'اقفل')}">${t('Close', 'اقفل')}</button>
   </div>
   <div class="viewer__stage" data-lenis-prevent></div>
   <div class="viewer__foot">
     <p class="viewer__desc"></p>
-    <div class="viewer__nav"><button class="viewer__prev" aria-label="Previous">←</button><span class="viewer__count"></span><button class="viewer__next" aria-label="Next">→</button></div>
+    <div class="viewer__nav"><button class="viewer__prev" aria-label="${t('Previous', 'السابق')}">←</button><span class="viewer__count"></span><button class="viewer__next" aria-label="${t('Next', 'التالي')}">→</button></div>
   </div>`;
 document.body.append(viewer);
 let vItem = null, vIdx = 0, vFrom = null;
 function vRender() {
   const m = vItem.gallery[vIdx], stage = $('.viewer__stage', viewer);
   stage.innerHTML = m.type === 'video'
-    ? `<video src="${m.src}"${m.poster ? ` poster="${m.poster}"` : ''} ${m.sound ? 'controls' : 'muted'} autoplay loop playsinline class="${m.vertical ? 'is-vertical' : ''}"></video>`
-    : `<img src="${m.src}" alt="${vItem.title}${vItem.gallery.length > 1 ? ` — page ${vIdx + 1}` : ''}">`;
-  const many = vItem.gallery.length > 1;
-  $('.viewer__nav', viewer).hidden = !many;
-  $('.viewer__count', viewer).textContent = `${vIdx + 1} / ${vItem.gallery.length}`;
+    ? `<video src="${m.src}"${m.poster ? ` poster="${m.poster}"` : ''} muted autoplay loop playsinline></video>`
+    : `<img src="${m.src}" alt="${vItem.title} — ${m.alt}">`;
+  $('.viewer__count', viewer).textContent = `${vIdx + 1} / ${vItem.gallery.length}${m.alt ? ' · ' + m.alt : ''}`;
   if (!reduced) gsap.fromTo(stage.firstElementChild, { opacity: 0, y: 24, scale: .97 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'expo.out' });
 }
-function openWork(card) {
-  const w = WORK.find(x => x.id === card.dataset.id);
-  if (!w) return;
-  if (w.case) return openCase(card);
-  vItem = w; vIdx = 0; vFrom = card;
-  $('.viewer__title', viewer).textContent = w.title;
-  $('.viewer__cat', viewer).textContent = w.cat;
-  $('.viewer__desc', viewer).textContent = w.desc;
+function openGallery(key, from) {
+  vItem = GALLERIES[key]; vIdx = 0; vFrom = from;
+  $('.viewer__title', viewer).textContent = vItem.title;
+  $('.viewer__cat', viewer).textContent = vItem.cat;
+  $('.viewer__desc', viewer).textContent = vItem.desc;
   viewer.hidden = false; lenis?.stop(); document.body.style.overflow = 'hidden';
   vRender();
   gsap.fromTo(viewer, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: reduced ? 0 : .9, ease: 'expo.inOut' });
@@ -559,39 +357,27 @@ function closeWork() {
   } });
 }
 const vStep = d => { vIdx = (vIdx + d + vItem.gallery.length) % vItem.gallery.length; vRender(); };
+$$('[data-gallery]').forEach(b => b.addEventListener('click', () => openGallery(b.dataset.gallery, b)));
 $('.viewer__close', viewer).addEventListener('click', closeWork);
 $('.viewer__prev', viewer).addEventListener('click', () => vStep(-1));
 $('.viewer__next', viewer).addEventListener('click', () => vStep(1));
 addEventListener('keydown', e => {
   if (viewer.hidden) return;
+  const rtl = document.dir === 'rtl';
   if (e.key === 'Escape') closeWork();
-  if (vItem?.gallery.length > 1 && e.key === 'ArrowRight') vStep(1);
-  if (vItem?.gallery.length > 1 && e.key === 'ArrowLeft') vStep(-1);
+  if (e.key === 'ArrowRight') vStep(rtl ? -1 : 1);
+  if (e.key === 'ArrowLeft') vStep(rtl ? 1 : -1);
 });
-
-// Cutting-table cut-outs are CSS backgrounds (they'd load on first paint); attach them only near view
-const cutTable = $('[data-table]');
-if (cutTable) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { cutTable.classList.add('is-near'); io.disconnect(); } }, { rootMargin: '800px 0px' }).observe(cutTable);
-
-// Video posters download immediately even for videos far down the page — attach them as each video nears view
-{
-  const pio = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.poster = e.target.dataset.poster; pio.unobserve(e.target);
-  }), { rootMargin: '1000px 0px' });
-  // the case-study modal is fixed over the viewport, so its posters are set when it opens instead
-  $$('video[data-poster]').forEach(v => v.closest('.case') ? null : pio.observe(v));
-}
 
 // Phones/tablets: floating WhatsApp button would cover the pricing cards — hide it while the cards are on screen
 {
-  const waEl = $('.wa'), grid = $('[data-pgrid]'), phone = matchMedia('(max-width: 1024px)');
+  const phone = matchMedia('(max-width: 1024px)');
   let onGrid = false;
   const apply = () => $$('.wa').forEach(b => b.classList.toggle('is-aside', phone.matches && onGrid));
   // pricing cards, FAQ answers and the two forms sit under the floating buttons on small screens
   const covered = new Set();
   const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? covered.add(e.target) : covered.delete(e.target)); onGrid = covered.size > 0; apply(); }, { rootMargin: '-15% 0px -15% 0px' });
-  [grid, $('[data-faq-list]'), $('[data-review-form]'), $('[data-reviews-grid]'), $('[data-inquiry]')].forEach(t => t && io.observe(t));
+  [$('[data-pgrid]'), $('[data-faq-list]'), $('[data-review-form]'), $('[data-reviews-grid]'), $('[data-inquiry]')].forEach(el => el && io.observe(el));
   phone.addEventListener?.('change', apply);
 }
 
@@ -599,6 +385,8 @@ if (cutTable) new IntersectionObserver(([e], io) => { if (e.isIntersecting) { cu
 {
   const top = $('.wa--top');
   if (top) ScrollTrigger.create({ start: () => innerHeight * .9, end: 'max', onToggle: s => top.classList.toggle('is-shown', s.isActive) });
+  // past the hero the nav gets a solid strip (its blend mode would turn it blue over amber)
+  ScrollTrigger.create({ start: () => innerHeight * .9, end: 'max', onToggle: s => $('.nav').classList.toggle('is-solid', s.isActive) });
 }
 
 // Keep the non-blended logo lamp exactly over the logo's lamp block

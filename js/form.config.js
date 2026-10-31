@@ -32,53 +32,28 @@ export const FORM = {
     },
   },
 
-  /** Service choice text in the form, keyed by pricing.data service id */
-  serviceChoice: {
-    social: 'Social Media', youtube: 'YouTube', websites: 'Websites', documents: 'PDF & Presentations', ads: 'Ads',
-  },
+  /** Service choice text in the form, keyed by pricing.data service id (the site sells websites only now) */
+  serviceChoice: { websites: 'Websites' },
 
-  /** Package choice text in the form. Social keys are "<billing>:<packageId>". */
+  /** Package choice text in the form — must match the Google Form options exactly (always English). */
   packageChoice: {
-    social: {
-      'weekly:starter': 'Weekly - Starter (2 posts + 1 reel) - 800 EGP (was 1,400)',
-      'weekly:growth': 'Weekly - Growth (3 posts + 1 reel + ad campaign) - 1,500 EGP (was 2,700)',
-      'weekly:pro': 'Weekly - Pro (4 posts + 2 reels + ad campaign + motion video) - 2,600 EGP (was 4,600)',
-      'monthly:starter': 'Monthly - Starter (8 posts + 4 reels) - 2,700 EGP (was 5,200)',
-      'monthly:growth': 'Monthly - Growth (12 posts + 4 reels + ad campaign + report) - 5,000 EGP (was 9,500)',
-      'monthly:pro': 'Monthly - Pro (16 posts + 8 reels + 2 ad campaigns + motion video + content plan) - 8,900 EGP (was 17,000)',
-    },
-    youtube: {
-      single: 'Single Episode (script + visual package + SEO) - 1,000 EGP (was 1,800)',
-      monthly4: 'Monthly: 4 Episodes - 3,400 EGP (was 6,000)',
-      thumbs: 'Thumbnails Pack (4 thumbnails) - 600 EGP (was 1,000)',
-    },
     websites: {
       landing: 'Landing Page - 3,500 EGP (was 6,500)',
       business: 'Business Website (5 pages) - 6,000 EGP (was 11,000)',
       ecommerce: 'E-commerce Store - 14,000 EGP (was 25,000)',
     },
-    documents: {
-      upto10: 'Up to 10 pages - 700 EGP (was 1,200)',
-      pro30: 'Professional, 11-30 pages - 900 EGP (was 1,500)',
-      bundle3: '3 Documents Bundle - 1,900 EGP (was 3,200)',
-    },
-    ads: {
-      creative: 'Creative Pack (10 designs + 3 copy variations) - 900 EGP (was 1,500)',
-      strategy: 'Strategy + Creative + Copy - 1,500 EGP (was 2,600)',
-    },
   },
 };
 
-/** Form choice text for a package. Social keys are "<billing>:<packageId>". */
-export function packageChoice(serviceId, packageId, billing) {
-  const key = serviceId === 'social' ? `${billing}:${packageId}` : packageId;
-  return FORM.packageChoice[serviceId]?.[key];
+/** Form choice text for a package. */
+export function packageChoice(serviceId, packageId) {
+  return FORM.packageChoice[serviceId]?.[packageId];
 }
 
 /**
  * Body for a POST to FORM.responseUrl.
  * @param {{ name: string, phone: string, email: string, brand: string, idea: string,
- *           serviceId: string, packageId: string, billing?: string }} d
+ *           serviceId: string, packageId: string }} d
  */
 export function formBody(d) {
   const e = FORM.entries, p = new URLSearchParams();
@@ -87,7 +62,7 @@ export function formBody(d) {
   if (d.email) p.set(`entry.${e.email}`, d.email);
   p.set(`entry.${e.brand}`, d.brand);
   p.set(`entry.${e.service}`, FORM.serviceChoice[d.serviceId]);
-  p.set(`entry.${e.package[d.serviceId]}`, packageChoice(d.serviceId, d.packageId, d.billing) || '');
+  p.set(`entry.${e.package[d.serviceId]}`, packageChoice(d.serviceId, d.packageId) || '');
   if (d.idea) p.set(`entry.${e.idea}`, d.idea);
   // the form branches by service, so tell Google which pages were "visited"
   p.set('pageHistory', `0,${FORM.pages[d.serviceId]},${FORM.pages.last}`);

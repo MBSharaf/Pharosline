@@ -11,6 +11,8 @@ export const REVIEWS = {
   responseUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSefKEd5pvtXDjTx0SfmhNC2KDSx2Iihg75X7n2qO3PHRmofSA/formResponse',
   editUrl: 'https://docs.google.com/forms/d/1xm9XlpsyExVvBPJDKxCgB6d1g2QFZuHN1ospfKYz0PQ/edit',
   entries: { name: '371260723', brand: '524979771', service: '857220514', rating: '294615794', text: '884869031', phone: '1639180307' },
-  services: ['Social Media', 'YouTube', 'Websites', 'PDF & Presentations', 'Ads', 'Motion Graphic Videos', 'Brand Identity', 'Other'],
+  // values must match the Google Form choices; servicesAr is only the label shown on ar.html
+  services: ['Websites', 'Other'],
+  servicesAr: ['موقع', 'حاجة تانية'],
   maxLength: 600,
 };

@@ -2,6 +2,7 @@
 // Reviews: show approved reviews from the sheet feed, and let customers send a new one.
 import { REVIEWS } from './reviews.config.js';
 import { toast } from './toast.js';
+import { t } from './i18n.js';
 
 const gsap = /** @type {any} */ (window).gsap;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -17,14 +18,14 @@ const esc = (/** @type {string} */ s) => s.replace(/[&<>"']/g, c => ({ '&': '&am
 function render(list) {
   if (!list.length) {
     grid.hidden = true;
-    $('[data-reviews-lede]').textContent = 'We’re new, so this wall is still empty. Worked with us? Be one of the first to leave a review.';
+    $('[data-reviews-lede]').textContent = t('We’re new, so this wall is still empty. Worked with us? Be one of the first to leave a review.', 'إحنا لسه جداد، فالحيطة دي لسه فاضية. اشتغلت معانا؟ كن من أول الناس اللي يكتبوا رأيهم.');
     return;
   }
   grid.hidden = false;
   grid.innerHTML = list.map(r => `
     <figure class="rcard">
       <span class="tape tape--tl" aria-hidden="true"></span>
-      <div class="rcard__stars" aria-label="${r.rating} out of 5 stars">${'★'.repeat(r.rating)}<i>${'★'.repeat(5 - r.rating)}</i></div>
+      <div class="rcard__stars" aria-label="${t(`${r.rating} out of 5 stars`, `${r.rating} من 5 نجوم`)}">${'★'.repeat(r.rating)}<i>${'★'.repeat(5 - r.rating)}</i></div>
       <blockquote class="rcard__text" dir="auto">“${esc(r.text)}”</blockquote>
       <figcaption><strong dir="auto">${esc(r.name)}</strong><span dir="auto">${esc([r.brand, r.service].filter(Boolean).join(' · '))}</span></figcaption>
     </figure>`).join('');
@@ -37,7 +38,7 @@ grid.hidden = true;
 new IntersectionObserver((es, io) => { if (es.some(e => e.isIntersecting)) { io.disconnect(); loadReviews(); } }, { rootMargin: '1500px 0px' }).observe(section);
 
 /* ---------- leave a review ---------- */
-$('[data-review-services]').innerHTML = REVIEWS.services.map(s => `<label><input type="radio" name="service" value="${s}"><span>${s}</span></label>`).join('');
+$('[data-review-services]').innerHTML = REVIEWS.services.map((s, i) => `<label><input type="radio" name="service" value="${s}"><span>${t(s, REVIEWS.servicesAr[i])}</span></label>`).join('');
 openBtn.addEventListener('click', () => {
   const open = form.hidden;
   form.hidden = !open; openBtn.setAttribute('aria-expanded', String(open));
@@ -56,12 +57,12 @@ form.addEventListener('submit', async e => {
   form.querySelectorAll('.is-invalid').forEach(x => x.classList.remove('is-invalid'));
   const bad = (/** @type {string} */ n) => form.querySelector(`[name=${n}]`)?.closest('.field, fieldset')?.classList.add('is-invalid');
   const problems = [];
-  if (!d.name) { problems.push('add your name'); bad('name'); }
-  if (!d.service) { problems.push('choose the service'); bad('service'); }
-  if (!d.rating) { problems.push('choose a star rating'); bad('rating'); }
-  if (d.text.length < 10) { problems.push('write at least 10 characters'); bad('text'); }
-  if (d.phone && !/^\+?[0-9]{10,15}$/.test(d.phone)) { problems.push('fix the WhatsApp number or leave it empty'); bad('phone'); }
-  if (problems.length) { err.hidden = false; err.textContent = 'To send your review, ' + problems.join(', ') + '.'; return; }
+  if (!d.name) { problems.push(t('add your name', 'اكتب اسمك')); bad('name'); }
+  if (!d.service) { problems.push(t('choose the service', 'اختار الخدمة')); bad('service'); }
+  if (!d.rating) { problems.push(t('choose a star rating', 'اختار عدد النجوم')); bad('rating'); }
+  if (d.text.length < 10) { problems.push(t('write at least 10 characters', 'اكتب 10 حروف على الأقل')); bad('text'); }
+  if (d.phone && !/^\+?[0-9]{10,15}$/.test(d.phone)) { problems.push(t('fix the WhatsApp number or leave it empty', 'صحّح رقم الواتساب أو سيبه فاضي')); bad('phone'); }
+  if (problems.length) { err.hidden = false; err.textContent = t('To send your review, ', 'عشان تبعت رأيك: ') + problems.join(t(', ', '، ')) + '.'; return; }
   err.hidden = true;
 
   const e2 = REVIEWS.entries, body = new URLSearchParams();
@@ -73,16 +74,16 @@ form.addEventListener('submit', async e => {
   if (d.phone) body.set(`entry.${e2.phone}`, d.phone);
 
   const btn = /** @type {HTMLButtonElement} */ (form.querySelector('button[type=submit]')), label = /** @type {HTMLElement} */ (btn.querySelector('span'));
-  btn.disabled = true; label.textContent = 'SENDING…';
+  btn.disabled = true; label.textContent = t('SENDING…', 'بيتبعت…');
   try {
     await fetch(REVIEWS.responseUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-    toast({ title: 'Review sent', text: 'Thank you! It will appear on our website after a quick check.' });
+    toast({ title: t('Review sent', 'رأيك وصل'), text: t('Thank you! It will appear on our website after a quick check.', 'شكرًا! هيظهر على موقعنا بعد مراجعة سريعة.') });
     form.hidden = true; openBtn.hidden = true;
     const done = $('[data-review-done]'); done.hidden = false;
     if (!reduced) gsap.from(done.children, { y: 30, opacity: 0, stagger: .1, duration: .8, ease: 'expo.out' });
   } catch {
-    btn.disabled = false; label.textContent = 'SEND REVIEW';
-    err.hidden = false; err.textContent = "Your review didn't send — check your connection and try again.";
-    toast({ type: 'error', title: "Your review didn't send", text: 'Check your connection and try again.' });
+    btn.disabled = false; label.textContent = t('SEND REVIEW', 'ابعت رأيك');
+    err.hidden = false; err.textContent = t("Your review didn't send — check your connection and try again.", 'رأيك ما اتبعتش — اتأكد من النت وجرّب تاني.');
+    toast({ type: 'error', title: t("Your review didn't send", 'رأيك ما اتبعتش'), text: t('Check your connection and try again.', 'اتأكد من النت وجرّب تاني.') });
   }
 });

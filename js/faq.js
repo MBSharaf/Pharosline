@@ -1,6 +1,7 @@
 // @ts-check
-// Pricing FAQ accordion (data in faq.data.js). One open at a time, keyboard + screen-reader friendly.
+// FAQ accordion (data in faq.data.js). One open at a time, keyboard + screen-reader friendly.
 import { FAQ } from './faq.data.js';
+import { t } from './i18n.js';
 
 const gsap = /** @type {any} */ (window).gsap;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -9,8 +10,8 @@ const list = /** @type {HTMLElement} */ (document.querySelector('[data-faq-list]
 list.innerHTML = FAQ.map((f, i) => `
   <div class="faq__item">
     <h4 class="faq__h"><button class="faq__q" aria-expanded="false" aria-controls="faq-a-${i}" id="faq-q-${i}">
-      <span>${f.q}</span><i class="faq__icon" aria-hidden="true"></i></button></h4>
-    <div class="faq__a" id="faq-a-${i}" role="region" aria-labelledby="faq-q-${i}" hidden><p>${f.a}</p></div>
+      <span>${t(f.q, f.qAr)}</span><i class="faq__icon" aria-hidden="true"></i></button></h4>
+    <div class="faq__a" id="faq-a-${i}" role="region" aria-labelledby="faq-q-${i}" hidden><p>${t(f.a, f.aAr)}</p></div>
   </div>`).join('');
 
 /** @param {HTMLButtonElement} btn @param {boolean} open */
