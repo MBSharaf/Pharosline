@@ -44,8 +44,8 @@ export function toast({ title, text = '', type = 'success', duration = 6500 }) {
   const timer = /** @type {HTMLElement} */ (el.querySelector('.toast__timer'));
   timer.style.animationDuration = `${duration}ms`;
   // pause the countdown while the visitor hovers or focuses it
-  let t = setTimeout(close, duration), left = duration, start = Date.now();
-  el.addEventListener('pointerenter', () => { clearTimeout(t); left -= Date.now() - start; el.classList.add('is-paused'); });
-  el.addEventListener('pointerleave', () => { start = Date.now(); t = setTimeout(close, left); el.classList.remove('is-paused'); });
+  let tid = setTimeout(close, duration), left = duration, start = Date.now();
+  el.addEventListener('pointerenter', () => { clearTimeout(tid); left -= Date.now() - start; el.classList.add('is-paused'); });
+  el.addEventListener('pointerleave', () => { start = Date.now(); tid = setTimeout(close, left); el.classList.remove('is-paused'); });
   return close;
 }
