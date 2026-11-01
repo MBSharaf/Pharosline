@@ -46,19 +46,10 @@ export const FORM = {
   },
 
   /**
-   * TEMPORARY: the live Google Form still only has the old (Oct 2026) options, and it drops any answer
-   * that isn't one of them. Until tools/update-form-options.gs has run, send an option the form has and
-   * put the real choice at the start of the idea field, e.g. "[Technical consultation (not sure yet)]".
-   * Set to null once the form shows the new options.
+   * Set this to { websites: { packageId: 'option text the form still has' } } only if the site must go live
+   * before the Google Form has the new options; the real choice then goes into the idea field.
    */
-  legacyChoice: {
-    websites: {
-      consult: 'Landing Page - 3,500 EGP (was 6,500)',
-      landing: 'Landing Page - 3,500 EGP (was 6,500)',
-      business: 'Business Website (5 pages) - 6,000 EGP (was 11,000)',
-      ecommerce: 'E-commerce Store - 14,000 EGP (was 25,000)',
-    },
-  },
+  legacyChoice: null,
 };
 
 /** Form choice text for a package. */
