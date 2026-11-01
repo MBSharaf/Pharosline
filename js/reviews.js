@@ -14,13 +14,15 @@ const err = $('[data-review-error]');
 const esc = (/** @type {string} */ s) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] || c));
 
 /* ---------- approved reviews ---------- */
+const lede = $('[data-reviews-lede]'), ledeText = lede.textContent;
 /** @param {{name:string,brand:string,service:string,rating:number,text:string}[]} list */
 function render(list) {
   if (!list.length) {
     grid.hidden = true;
-    $('[data-reviews-lede]').textContent = t('We’re new, so this wall is still empty. Worked with us? Be one of the first to leave a review.', 'إحنا لسه جداد، فالحيطة دي لسه فاضية. اشتغلت معانا؟ كن من أول الناس اللي يكتبوا رأيهم.');
+    lede.textContent = t('We’re new, so this wall is still empty. Worked with us? Be one of the first to leave a review.', 'إحنا لسه جداد، فالحيطة دي لسه فاضية. اشتغلت معانا؟ كن من أول الناس اللي يكتبوا رأيهم.');
     return;
   }
+  lede.textContent = ledeText; // a later source may bring reviews after an empty one
   grid.hidden = false;
   grid.innerHTML = list.map(r => `
     <figure class="rcard">
@@ -31,8 +33,25 @@ function render(list) {
     </figure>`).join('');
   if (!reduced) gsap.from(grid.children, { opacity: 0, y: 30, duration: .7, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: grid, start: 'top 85%', once: true } });
 }
-// Ask Google for approved reviews only when the visitor gets near the section (the feed takes ~1–3 s to answer)
-const loadReviews = () => fetch(REVIEWS.feedUrl).then(r => r.json()).then(d => render(Array.isArray(d.reviews) ? d.reviews : [])).catch(() => render([]));
+// Approved reviews come from two places, loaded when the visitor nears the section:
+//  1. assets/reviews.json — the snapshot from the last build; a static file, so it works for any number of visitors
+//  2. the live Apps Script feed (1–3 s, max 30 calls at a time) — adds reviews approved since that build
+// A failed source never wipes what's shown, and "the wall is empty" only appears when a source really said so.
+const getList = (/** @type {string} */ url, ms = 8000) => Promise.race([
+  fetch(url, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : Promise.reject(r.status))).then(d => (Array.isArray(d.reviews) ? d.reviews : Promise.reject('bad data'))),
+  new Promise((_, no) => setTimeout(() => no('timeout'), ms)),
+]);
+let shown = /** @type {string | null} */ (null);
+const show = (/** @type {any[]} */ list) => { const key = JSON.stringify(list); if (key !== shown) { shown = key; render(list); } };
+const SEEN = 'pharos-reviews';
+function loadReviews() {
+  try { const s = sessionStorage.getItem(SEEN); if (s) show(JSON.parse(s)); } catch { /* storage blocked */ }
+  getList(REVIEWS.staticUrl, 6000).then(list => { if (shown === null) show(list); }).catch(() => {});
+  getList(REVIEWS.feedUrl).then(list => {
+    show(list);
+    try { sessionStorage.setItem(SEEN, JSON.stringify(list)); } catch { /* storage blocked */ }
+  }).catch(() => {}); // feed busy or down: keep whatever the snapshot showed
+}
 const section = grid.closest('section');
 grid.hidden = true;
 new IntersectionObserver((es, io) => { if (es.some(e => e.isIntersecting)) { io.disconnect(); loadReviews(); } }, { rootMargin: '1500px 0px' }).observe(section);
