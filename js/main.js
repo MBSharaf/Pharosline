@@ -14,16 +14,16 @@ gsap.registerPlugin(ScrollTrigger);
 const shot = (src, en, ar) => ({ type: 'image', src: `assets/work/${src}.jpg`, alt: t(en, ar) });
 const GALLERIES = {
   idt: { title: 'IDT', cat: t('Website · Dental technology', 'موقع · تكنولوجيا الأسنان'),
-    desc: t('Live at mbsharaf.github.io/IDT — interactive 3D machines, product catalog and inquiry forms.', 'شغّال على mbsharaf.github.io/IDT — موديلات 3D تفاعلية للماكينات، كتالوج منتجات، وفورم استفسار.'),
-    gallery: [shot('idt-home', 'Home page', 'الصفحة الرئيسية'), shot('idt-workflow', 'The 4-step lab story', 'قصة المعمل في 4 خطوات'),
-      shot('idt-products', 'Featured machines', 'الماكينات المميزة'), shot('idt-product-3d', 'Machine page with the 3D model', 'صفحة الماكينة بالموديل الـ 3D'),
+    desc: t('Interactive 3D machines, a product catalog and inquiry forms.', 'نماذج ثلاثية الأبعاد تفاعلية للأجهزة، وكتالوج منتجات، ونماذج استفسار.'),
+    gallery: [shot('idt-home', 'Home page', 'الصفحة الرئيسية'), shot('idt-workflow', 'The 4-step lab story', 'مراحل عمل المعمل الأربع'),
+      shot('idt-products', 'Featured machines', 'الأجهزة المميزة'), shot('idt-product-3d', 'Machine page with the 3D model', 'صفحة الجهاز مع النموذج ثلاثي الأبعاد'),
       { type: 'video', src: 'assets/work/idt-3d.mp4', poster: 'assets/work/idt-3d.jpg' },
-      shot('idt-mobile', 'On a phone', 'على الموبايل'), shot('idt-mobile-3d', '3D model on a phone', 'الموديل الـ 3D على الموبايل')] },
+      shot('idt-mobile', 'On a phone', 'على الهاتف المحمول'), shot('idt-mobile-3d', '3D model on a phone', 'النموذج ثلاثي الأبعاد على الهاتف')] },
   super: { title: 'Super App', cat: t('Website · Sports booking platform', 'موقع · منصة حجز رياضية'),
-    desc: t('Live at mbsharaf.github.io/super-app — pitch booking, players, tournaments, fantasy and a shop.', 'شغّال على mbsharaf.github.io/super-app — حجز ملاعب، لاعيبة، بطولات، فانتازي، ومتجر.'),
-    gallery: [shot('super-home', 'Home page', 'الصفحة الرئيسية'), shot('super-pitches', 'Book a pitch', 'احجز ملعب'),
-      shot('super-fantasy', 'Fantasy league', 'الفانتازي'), shot('super-shop', 'The shop', 'المتجر'),
-      shot('super-mobile', 'On a phone', 'على الموبايل'), shot('super-mobile-fantasy', 'Fantasy on a phone', 'الفانتازي على الموبايل')] },
+    desc: t('Pitch booking, players, tournaments, fantasy and a shop.', 'حجز الملاعب، والبحث عن لاعبين، والبطولات، والدوري الافتراضي، ومتجر إلكتروني.'),
+    gallery: [shot('super-home', 'Home page', 'الصفحة الرئيسية'), shot('super-pitches', 'Book a pitch', 'حجز الملاعب'),
+      shot('super-fantasy', 'Fantasy league', 'الدوري الافتراضي'), shot('super-shop', 'The shop', 'المتجر'),
+      shot('super-mobile', 'On a phone', 'على الهاتف المحمول'), shot('super-mobile-fantasy', 'Fantasy on a phone', 'الدوري الافتراضي على الهاتف')] },
 };
 
 /* ------------------------------------------------------------------
@@ -227,7 +227,7 @@ if (!reduced) {
       const s = j === i && on, btn = $('.reel-card__sound', reels[j]);
       v.muted = !s; reels[j].classList.toggle('has-sound', s);
       btn.setAttribute('aria-pressed', String(s));
-      btn.setAttribute('aria-label', s ? t('Mute', 'اكتم الصوت') : t('Turn sound on', 'شغّل الصوت'));
+      btn.setAttribute('aria-label', s ? t('Mute', 'كتم الصوت') : t('Turn sound on', 'تشغيل الصوت'));
     });
   };
   reels.forEach((r, i) => {
@@ -289,7 +289,7 @@ const chapters = $$('[data-chapter]');
 const clipsBar = $('.timeline__clips');
 function buildTimeline() {
   const H = document.documentElement.scrollHeight;
-  clipsBar.innerHTML = chapters.map((c, i) => `<button style="--w:${c.offsetHeight / H}" aria-label="${t('Go to', 'روح لـ')} ${c.dataset.chapter}" data-ch="${i}"></button>`).join('');
+  clipsBar.innerHTML = chapters.map((c, i) => `<button style="--w:${c.offsetHeight / H}" aria-label="${t('Go to', 'الانتقال إلى')} ${c.dataset.chapter}" data-ch="${i}"></button>`).join('');
 }
 clipsBar.addEventListener('click', e => { const b = e.target.closest('button'); if (b) scrollTo(chapters[+b.dataset.ch]); });
 ScrollTrigger.addEventListener('refresh', buildTimeline);
@@ -323,7 +323,7 @@ viewer.setAttribute('role', 'dialog'); viewer.setAttribute('aria-modal', 'true')
 viewer.innerHTML = `
   <div class="viewer__bar">
     <div><h2 id="viewer-title" class="viewer__title"></h2><p class="viewer__cat"></p></div>
-    <button class="viewer__close" data-cursor="${t('Close', 'اقفل')}">${t('Close', 'اقفل')}</button>
+    <button class="viewer__close" data-cursor="${t('Close', 'إغلاق')}">${t('Close', 'إغلاق')}</button>
   </div>
   <div class="viewer__stage" data-lenis-prevent></div>
   <div class="viewer__foot">

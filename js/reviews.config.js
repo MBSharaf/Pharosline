@@ -16,6 +16,6 @@ export const REVIEWS = {
   entries: { name: '371260723', brand: '524979771', service: '857220514', rating: '294615794', text: '884869031', phone: '1639180307' },
   // values must match the Google Form choices; servicesAr is only the label shown on ar.html
   services: ['Websites', 'Other'],
-  servicesAr: ['موقع', 'حاجة تانية'],
+  servicesAr: ['موقع إلكتروني', 'خدمة أخرى'],
   maxLength: 600,
 };

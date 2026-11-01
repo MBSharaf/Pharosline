@@ -1,7 +1,7 @@
 // @ts-check
 // Single source of truth for Pharosline pricing. Edit numbers here only —
-// cards, discount badges, the hero offer and WhatsApp messages are all derived from this file.
-// After a change: update form.config.js + the Google Form option text, then run tools/prerender.py.
+// cards, discount badges and the offer numbers are all derived from this file.
+// After a change: update form.config.js + the Google Form option text (tools/update-form-options.gs), then run tools/prerender.py.
 import { t } from './i18n.js';
 
 /**
@@ -10,7 +10,7 @@ import { t } from './i18n.js';
  * @property {string} name
  * @property {string} nameAr
  * @property {number} before   Regular price in EGP
- * @property {number} after    First-client price in EGP
+ * @property {number} after    Launch-offer price in EGP
  * @property {boolean} [popular]
  * @property {string[]} features
  * @property {string[]} featuresAr
@@ -19,7 +19,7 @@ import { t } from './i18n.js';
  * @property {'websites'} id
  * @property {string} label
  * @property {string} labelAr
- * @property {string} planLabel        Used in the WhatsApp message
+ * @property {string} planLabel
  * @property {string} [note]           Footer note under the grid
  * @property {string} [noteAr]
  * @property {Package[]} packages
@@ -28,22 +28,25 @@ import { t } from './i18n.js';
 export const CURRENCY = 'EGP';
 export const WHATSAPP_NUMBER = '201017300040';
 
+/** Every package includes this many months of technical support after launch. */
+export const SUPPORT_MONTHS = 6;
+
 /** @type {Service[]} */
 export const SERVICES = [
   {
     id: 'websites', label: 'Websites', labelAr: 'المواقع', planLabel: 'Websites',
-    note: 'Final scope is confirmed on WhatsApp before we start.',
-    noteAr: 'بنأكد معاك كل تفاصيل الموقع على واتساب قبل ما نبدأ.',
+    note: 'The final scope and timeline are agreed with you in writing before work begins.',
+    noteAr: 'نعتمد معك نطاق العمل والجدول الزمني بشكل نهائي قبل بدء التنفيذ.',
     packages: [
-      { id: 'landing', name: 'Landing Page', nameAr: 'صفحة هبوط', before: 6500, after: 3500,
-        features: ['one high-converting page', 'responsive design', 'animated UI', 'WhatsApp / contact button', 'basic SEO setup'],
-        featuresAr: ['صفحة واحدة معمولة عشان تبيع', 'تصميم متجاوب مع كل الشاشات', 'واجهة فيها حركة وأنيميشن', 'زرار واتساب وتواصل', 'تجهيز SEO أساسي'] },
-      { id: 'business', name: 'Business Website (5 pages)', nameAr: 'موقع شركة (5 صفحات)', before: 11000, after: 6000, popular: true,
-        features: ['up to 5 pages', 'responsive design', 'animated UI', 'contact form', 'SEO setup', 'project planning phase before build'],
-        featuresAr: ['لحد 5 صفحات', 'تصميم متجاوب مع كل الشاشات', 'واجهة فيها حركة وأنيميشن', 'فورم تواصل', 'تجهيز SEO', 'مرحلة تخطيط للمشروع قبل التنفيذ'] },
-      { id: 'ecommerce', name: 'E-commerce Store', nameAr: 'متجر إلكتروني', before: 25000, after: 14000,
-        features: ['product catalog + cart + checkout flow', 'responsive design', 'animated UI', 'SEO setup', 'project planning phase before build', 'handover walkthrough'],
-        featuresAr: ['منتجات + سلة مشتريات + إتمام طلب', 'تصميم متجاوب مع كل الشاشات', 'واجهة فيها حركة وأنيميشن', 'تجهيز SEO', 'مرحلة تخطيط للمشروع قبل التنفيذ', 'شرح كامل للمتجر عند التسليم'] },
+      { id: 'landing', name: 'Landing Page', nameAr: 'صفحة هبوط', before: 5000, after: 4000,
+        features: ['one high-converting page', 'responsive design', 'animated UI', 'WhatsApp / contact button', 'basic SEO setup', '6 months of technical support'],
+        featuresAr: ['صفحة واحدة مصممة لتحقيق أعلى معدل تحويل', 'تصميم متجاوب مع جميع الشاشات', 'واجهة تفاعلية بحركة احترافية', 'زر واتساب ووسائل تواصل', 'تهيئة أساسية لمحركات البحث (SEO)', 'دعم فني لمدة 6 أشهر'] },
+      { id: 'business', name: 'Business Website (5 pages)', nameAr: 'موقع شركة (5 صفحات)', before: 9000, after: 7000, popular: true,
+        features: ['up to 5 pages', 'responsive design', 'animated UI', 'contact form', 'SEO setup', 'project planning phase before build', '6 months of technical support'],
+        featuresAr: ['حتى 5 صفحات', 'تصميم متجاوب مع جميع الشاشات', 'واجهة تفاعلية بحركة احترافية', 'نموذج تواصل', 'تهيئة لمحركات البحث (SEO)', 'مرحلة تخطيط للمشروع قبل التنفيذ', 'دعم فني لمدة 6 أشهر'] },
+      { id: 'ecommerce', name: 'E-commerce Store', nameAr: 'متجر إلكتروني', before: 20000, after: 16000,
+        features: ['product catalog + cart + checkout flow', 'responsive design', 'animated UI', 'SEO setup', 'project planning phase before build', 'handover walkthrough', '6 months of technical support'],
+        featuresAr: ['كتالوج منتجات + سلة مشتريات + إتمام الطلب', 'تصميم متجاوب مع جميع الشاشات', 'واجهة تفاعلية بحركة احترافية', 'تهيئة لمحركات البحث (SEO)', 'مرحلة تخطيط للمشروع قبل التنفيذ', 'شرح تفصيلي للمتجر عند التسليم', 'دعم فني لمدة 6 أشهر'] },
     ],
   },
 ];
@@ -62,10 +65,3 @@ export const OFFER = {
   from: Math.min(...WEBSITES.packages.map(p => p.after)),
   save: Math.max(...WEBSITES.packages.map(p => p.before - p.after)),
 };
-
-/** @param {Package} p */
-export function whatsappLink(p) {
-  const msg = t(`Hi Pharosline, I'd like the "${p.name}" website package at ${formatPrice(p.after)}.`,
-    `أهلاً فاروس لاين، عايز باقة «${p.nameAr}» بسعر ${formatPrice(p.after)}.`);
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-}

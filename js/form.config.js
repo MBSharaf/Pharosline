@@ -4,7 +4,7 @@
 // Owner account: pharosline.agency@gmail.com. Form built by tools/create-form.gs.
 //
 // If you change a price in pricing.data.js, change the matching option text here
-// AND in the Google Form (edit link below) — pre-fill only works on an exact match.
+// AND in the Google Form (run tools/update-form-options.gs) — the form rejects any answer that isn't an exact option.
 
 export const FORM = {
   editUrl: 'https://docs.google.com/forms/d/1fATBQqG2qfBBrVJCL8r8Cn_FfMSfjZiGZJHqSIdQu5U/edit',
@@ -38,6 +38,22 @@ export const FORM = {
   /** Package choice text in the form — must match the Google Form options exactly (always English). */
   packageChoice: {
     websites: {
+      consult: 'Technical consultation (not sure yet)',
+      landing: 'Landing Page - 4,000 EGP (was 5,000)',
+      business: 'Business Website (5 pages) - 7,000 EGP (was 9,000)',
+      ecommerce: 'E-commerce Store - 16,000 EGP (was 20,000)',
+    },
+  },
+
+  /**
+   * TEMPORARY: the live Google Form still only has the old (Oct 2026) options, and it drops any answer
+   * that isn't one of them. Until tools/update-form-options.gs has run, send an option the form has and
+   * put the real choice at the start of the idea field, e.g. "[Technical consultation (not sure yet)]".
+   * Set to null once the form shows the new options.
+   */
+  legacyChoice: {
+    websites: {
+      consult: 'Landing Page - 3,500 EGP (was 6,500)',
       landing: 'Landing Page - 3,500 EGP (was 6,500)',
       business: 'Business Website (5 pages) - 6,000 EGP (was 11,000)',
       ecommerce: 'E-commerce Store - 14,000 EGP (was 25,000)',
@@ -62,8 +78,11 @@ export function formBody(d) {
   if (d.email) p.set(`entry.${e.email}`, d.email);
   p.set(`entry.${e.brand}`, d.brand);
   p.set(`entry.${e.service}`, FORM.serviceChoice[d.serviceId]);
-  p.set(`entry.${e.package[d.serviceId]}`, packageChoice(d.serviceId, d.packageId) || '');
-  if (d.idea) p.set(`entry.${e.idea}`, d.idea);
+  const chosen = packageChoice(d.serviceId, d.packageId) || '';
+  const legacy = FORM.legacyChoice?.[d.serviceId]?.[d.packageId];
+  p.set(`entry.${e.package[d.serviceId]}`, legacy || chosen);
+  const idea = legacy ? `[${chosen}]${d.idea ? ' ' + d.idea : ''}` : d.idea;
+  if (idea) p.set(`entry.${e.idea}`, idea);
   // the form branches by service, so tell Google which pages were "visited"
   p.set('pageHistory', `0,${FORM.pages[d.serviceId]},${FORM.pages.last}`);
   return p;

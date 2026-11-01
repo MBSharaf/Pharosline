@@ -1,7 +1,7 @@
 // @ts-check
 // Website packages: discount banner + animated package cards. All numbers come from pricing.data.js.
-// Also fills every [data-offer="pct|from|save"] on the page (hero tag, offer band, pricing banner).
-import { WEBSITES, OFFER, discountPct, formatPrice, whatsappLink } from './pricing.data.js';
+// Also fills every [data-offer="pct|from|save"] on the page (offer band, pricing banner).
+import { WEBSITES, OFFER, discountPct, formatPrice } from './pricing.data.js';
 import { t } from './i18n.js';
 
 const gsap = /** @type {any} */ (window).gsap;
@@ -28,17 +28,16 @@ grid.innerHTML = WEBSITES.packages.map(p => {
       ${p.popular ? `<span class="pcard__pop">${t('Most popular', 'الأكثر طلبًا')}</span>` : ''}
       <span class="pcard__stamp" aria-hidden="true">-${discountPct(p)}%</span>
       <h3 class="pcard__name">${name}</h3>
-      <p class="pcard__label">${t('First-client offer · per project', 'عرض أول العملاء · للمشروع')}</p>
+      <p class="pcard__label">${t('Launch offer · per project', 'عرض الإطلاق · للمشروع الواحد')}</p>
       <div class="pcard__prices">
-        <span class="pcard__before"><span class="sr-only">${t('Before: ', 'قبل: ')}</span>${formatPrice(p.before)}</span>
+        <span class="pcard__before"><span class="sr-only">${t('Before: ', 'السعر الأصلي: ')}</span>${formatPrice(p.before)}</span>
         <span class="pcard__off">-${discountPct(p)}%</span>
       </div>
-      <p class="pcard__after"><span class="sr-only">${t('Now: ', 'دلوقتي: ')}</span><span data-price="${p.after}">${formatPrice(p.after)}</span></p>
-      <p class="pcard__save">${t('You save', 'هتوفّر')} <b>${formatPrice(p.before - p.after)}</b></p>
+      <p class="pcard__after"><span class="sr-only">${t('Now: ', 'السعر الحالي: ')}</span><span data-price="${p.after}">${formatPrice(p.after)}</span></p>
+      <p class="pcard__save">${t('You save', 'توفّر')} <b>${formatPrice(p.before - p.after)}</b></p>
       <ul class="pcard__feat">${p.features.map((f, j) => `<li>${CHECK}<span>${t(f, p.featuresAr[j])}</span></li>`).join('')}</ul>
       <a class="pcard__cta" href="#contact" data-request data-package="${p.id}" data-cursor="${t('Request', 'اطلب')}">
-        <span>${t('Request this package', 'اطلب الباقة دي')}</span>${ARROW}</a>
-      <a class="pcard__wa" href="${whatsappLink(p)}" target="_blank" rel="noopener">${t('or get started on WhatsApp', 'أو ابدأ على واتساب')}</a>
+        <span>${t('Request this package', 'اطلب هذه الباقة')}</span>${ARROW}</a>
     </article>`;
 }).join('');
 

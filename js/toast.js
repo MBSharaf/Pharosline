@@ -25,7 +25,7 @@ export function toast({ title, text = '', type = 'success', duration = 6500 }) {
   el.innerHTML = `
     <span class="toast__lamp">${ICON[type]}</span>
     <div class="toast__body"><strong>${title}</strong>${text ? `<span>${text}</span>` : ''}</div>
-    <button class="toast__close" type="button" aria-label="${t('Close notification', 'اقفل الإشعار')}">×</button>
+    <button class="toast__close" type="button" aria-label="${t('Close notification', 'إغلاق الإشعار')}">×</button>
     <i class="toast__timer" aria-hidden="true"></i>`;
   host.append(el);
 

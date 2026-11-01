@@ -19,7 +19,7 @@ const lede = $('[data-reviews-lede]'), ledeText = lede.textContent;
 function render(list) {
   if (!list.length) {
     grid.hidden = true;
-    lede.textContent = t('We’re new, so this wall is still empty. Worked with us? Be one of the first to leave a review.', 'إحنا لسه جداد، فالحيطة دي لسه فاضية. اشتغلت معانا؟ كن من أول الناس اللي يكتبوا رأيهم.');
+    lede.textContent = t('We’re just getting started, so there are no published reviews yet. Worked with us? Be one of the first to share your experience.', 'نحن في بداية رحلتنا، ولا توجد تقييمات منشورة بعد. هل تعاملت معنا؟ كن من أوائل من يشاركون تجربتهم.');
     return;
   }
   lede.textContent = ledeText; // a later source may bring reviews after an empty one
@@ -77,11 +77,11 @@ form.addEventListener('submit', async e => {
   const bad = (/** @type {string} */ n) => form.querySelector(`[name=${n}]`)?.closest('.field, fieldset')?.classList.add('is-invalid');
   const problems = [];
   if (!d.name) { problems.push(t('add your name', 'اكتب اسمك')); bad('name'); }
-  if (!d.service) { problems.push(t('choose the service', 'اختار الخدمة')); bad('service'); }
-  if (!d.rating) { problems.push(t('choose a star rating', 'اختار عدد النجوم')); bad('rating'); }
-  if (d.text.length < 10) { problems.push(t('write at least 10 characters', 'اكتب 10 حروف على الأقل')); bad('text'); }
-  if (d.phone && !/^\+?[0-9]{10,15}$/.test(d.phone)) { problems.push(t('fix the WhatsApp number or leave it empty', 'صحّح رقم الواتساب أو سيبه فاضي')); bad('phone'); }
-  if (problems.length) { err.hidden = false; err.textContent = t('To send your review, ', 'عشان تبعت رأيك: ') + problems.join(t(', ', '، ')) + '.'; return; }
+  if (!d.service) { problems.push(t('choose the service', 'اختر الخدمة')); bad('service'); }
+  if (!d.rating) { problems.push(t('choose a star rating', 'اختر التقييم')); bad('rating'); }
+  if (d.text.length < 10) { problems.push(t('write at least 10 characters', 'اكتب 10 أحرف على الأقل')); bad('text'); }
+  if (d.phone && !/^\+?[0-9]{10,15}$/.test(d.phone)) { problems.push(t('fix the WhatsApp number or leave it empty', 'صحّح رقم واتساب أو اترك الحقل فارغًا')); bad('phone'); }
+  if (problems.length) { err.hidden = false; err.textContent = t('To send your review, ', 'لإرسال تقييمك: ') + problems.join(t(', ', '، ')) + '.'; return; }
   err.hidden = true;
 
   const e2 = REVIEWS.entries, body = new URLSearchParams();
@@ -93,16 +93,16 @@ form.addEventListener('submit', async e => {
   if (d.phone) body.set(`entry.${e2.phone}`, d.phone);
 
   const btn = /** @type {HTMLButtonElement} */ (form.querySelector('button[type=submit]')), label = /** @type {HTMLElement} */ (btn.querySelector('span'));
-  btn.disabled = true; label.textContent = t('SENDING…', 'بيتبعت…');
+  btn.disabled = true; label.textContent = t('SENDING…', 'جارٍ الإرسال…');
   try {
     await fetch(REVIEWS.responseUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-    toast({ title: t('Review sent', 'رأيك وصل'), text: t('Thank you! It will appear on our website after a quick check.', 'شكرًا! هيظهر على موقعنا بعد مراجعة سريعة.') });
+    toast({ title: t('Review sent', 'تم إرسال تقييمك'), text: t('Thank you! It will appear on our website after a quick review.', 'شكرًا لك! سيظهر تقييمك على موقعنا بعد مراجعته.') });
     form.hidden = true; openBtn.hidden = true;
     const done = $('[data-review-done]'); done.hidden = false;
     if (!reduced) gsap.from(done.children, { y: 30, opacity: 0, stagger: .1, duration: .8, ease: 'expo.out' });
   } catch {
-    btn.disabled = false; label.textContent = t('SEND REVIEW', 'ابعت رأيك');
-    err.hidden = false; err.textContent = t("Your review didn't send — check your connection and try again.", 'رأيك ما اتبعتش — اتأكد من النت وجرّب تاني.');
-    toast({ type: 'error', title: t("Your review didn't send", 'رأيك ما اتبعتش'), text: t('Check your connection and try again.', 'اتأكد من النت وجرّب تاني.') });
+    btn.disabled = false; label.textContent = t('SEND REVIEW', 'إرسال التقييم');
+    err.hidden = false; err.textContent = t("Your review didn't send — check your connection and try again.", 'تعذّر إرسال التقييم — تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.');
+    toast({ type: 'error', title: t("Your review didn't send", 'تعذّر إرسال التقييم'), text: t('Check your connection and try again.', 'تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.') });
   }
 });
